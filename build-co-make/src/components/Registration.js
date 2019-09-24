@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { withFormik, Form, Field } from 'formik'
 import * as yup from 'yup'
-import { axiosWithAuth } from '../axiosWithAuth/axiosWithAuth';
+import axios from 'axios';
 
 const UserForm = ({ 
     values, 
@@ -10,11 +10,11 @@ const UserForm = ({
     touched,
     status
 }) => {
-    const [user, setUser] = useState([])  //adding so we can see the state after submit but not needed for form.
+    const [user, setUser] = useState({})  //adding so we can see the state after submit but not needed for form.
     
     useEffect(() => {
         if(status) {
-            setUser([...user, status])
+            setUser(theUser => ({...user, theUser}));
         }
     }, [user, status])
     return (
@@ -47,8 +47,8 @@ const UserForm = ({
 const FormikUserForm = withFormik({
         mapPropsToValues({ username, password }) {
             return {
-                username: username || '',
-                password: password || '',
+                'username': username || '',
+                'password': password || '',
 
             }
         },
@@ -57,16 +57,18 @@ const FormikUserForm = withFormik({
             password: yup.string().min('9').required("Minimum 9 letters please.")
         }),
         
-        handleSubmit(values, { setStatus }) {
+        handleSubmit(values,{props}) {
             console.log("values: ", values);
-            axiosWithAuth()  
-                .post(`/auth/register`, values)
+            axios.post(`https://comake.herokuapp.com/api/auth/register`, values)
                 .then(res => {
                     console.log("POST res", res.data);
-                    console.log(values);
+                    props.history.push('/userHome');
+                    console.log(JSON.stringify(values));
                     
                 })
-                .catch(err => console.log("ERROR API", err))
+                .catch(err =>
+                    alert(err.response.data.message)
+                );
         }   
 })(UserForm)
 

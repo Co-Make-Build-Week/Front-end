@@ -25,7 +25,7 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      {/* <Switch> */}
+      <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/userHome" component={UserHome} />
@@ -39,7 +39,7 @@ function App() {
           }}
         />
         {/* <Route path="/issue/:id" component={IssuePage}/> */}
-      {/* </Switch> */}
+      </Switch>
     </div>
   );
 }
