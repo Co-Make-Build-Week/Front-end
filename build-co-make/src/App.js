@@ -4,6 +4,7 @@ import Login from "./components/Login.js";
 import Registration from "./components/Registration.js";
 import UserHome from "./components/UserHome.js";
 import IssuesListPage from "./components/IssuesListPage.js";
+import NavBar from "./components/Navheader";
 
 // IMPORT SUBMIT ISSUE FORM
 import SubmitIssueForm from "./components/submitIssueForm";
