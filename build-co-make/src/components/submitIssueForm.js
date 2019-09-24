@@ -4,7 +4,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 const initialIssueForm = {
   issue: "",
   category: "",
-  address: ""
+  address: "",
+  email: "",
+  textarea: "",
 };
 
 const onSubmit = () => {};
@@ -12,7 +14,6 @@ const onSubmit = () => {};
 export default function SubmitIssueForm({ onSubmit }) {
   return (
     <div>
-      This is the issue submit form
       <Formik
         initialValues={initialIssueForm}
         onSubmit={onSubmit}
@@ -40,6 +41,13 @@ export default function SubmitIssueForm({ onSubmit }) {
                   Address
                   <Field name="address" type="text" placeholder="address" />
                 </label>
+              </div>
+              <div>
+                  <label>
+                      Tell us more:
+                      <Field component="textarea" name="textarea" placeholder="tell us more" />
+                      {/* <textarea name="more-text" rows="5" cols="33"></textarea> */}
+                  </label>
               </div>
               <div>
                 <button type="submit">Submit Issue</button>
