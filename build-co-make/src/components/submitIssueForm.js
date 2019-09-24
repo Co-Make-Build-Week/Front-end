@@ -1,21 +1,33 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as yup from "yup";
 
-const initialIssueForm = {
-  issue: "",
-  category: "",
-  address: "",
-  email: "",
-  textarea: "",
-};
-
-const onSubmit = () => {};
+const validationSchema = yup.object().shape({
+  issue: yup
+    .string()
+    .required("Required")
+    .min(5, "This line seems to short. Can you elaborate a bit more?")
+    .max(30, "This line is too long. 30 chars max."),
+  category: yup.string().required("Required"),
+  address: yup.string().required("Required"),
+  textarea: yup
+    .string()
+    .required("Required")
+    .min(30, "More information needed")
+    .max(300, "300 characters max allowed")
+});
 
 export default function SubmitIssueForm({ onSubmit }) {
   return (
     <div>
       <Formik
-        initialValues={initialIssueForm}
+        validationSchema={validationSchema}
+        initialValues={{
+          issue: "",
+          category: "",
+          address: "",
+          textarea: "",
+        }}
         onSubmit={onSubmit}
         render={props => {
           return (
@@ -24,6 +36,7 @@ export default function SubmitIssueForm({ onSubmit }) {
                 <label>
                   Issue
                   <Field name="issue" type="text" placeholder="issue" />
+                  <ErrorMessage name="issue" component="div" />
                 </label>
               </div>
               <div>
@@ -34,20 +47,26 @@ export default function SubmitIssueForm({ onSubmit }) {
                     <option value="trees">Trees</option>
                     <option value="sidewalks">Sidewalks</option>
                   </Field>
+                  <ErrorMessage name="category" component="div" />
                 </label>
               </div>
               <div>
                 <label>
                   Address
                   <Field name="address" type="text" placeholder="address" />
+                  <ErrorMessage name="address" component="div" />
                 </label>
               </div>
               <div>
-                  <label>
-                      Tell us more:
-                      <Field component="textarea" name="textarea" placeholder="tell us more" />
-                      {/* <textarea name="more-text" rows="5" cols="33"></textarea> */}
-                  </label>
+                <label>
+                  Tell us more:
+                  <Field
+                    component="textarea"
+                    name="textarea"
+                    placeholder="tell us more"
+                  />
+                  <ErrorMessage name="textarea" component="div" />
+                </label>
               </div>
               <div>
                 <button type="submit">Submit Issue</button>
