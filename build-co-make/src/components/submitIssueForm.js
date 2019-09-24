@@ -43,7 +43,7 @@ export default function SubmitIssueForm({ onSubmit }) {
                 <label>
                   Category
                   <Field component="select" name="category">
-                    <option value="potholes">Select option</option>
+                    <option value="select">Select option</option>
                     <option value="potholes">Potholes</option>
                     <option value="trees">Trees</option>
                     <option value="sidewalks">Sidewalks</option>
