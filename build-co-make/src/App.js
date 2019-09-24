@@ -19,12 +19,12 @@ function App() {
   // NEW ISSUE SETTER
 
   const onSubmitIssue = formValues => {
-    debugger
     setNewIssue(formValues);
   };
 
   return (
     <div className="App">
+      <NavBar />
       {/* <Switch> */}
         <Route exact path="/" component={Login} />
         <Route exact path="/registration" component={Registration} />
