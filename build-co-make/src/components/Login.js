@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { withFormik, Form, Field } from 'formik';
 import * as yup from 'yup';
-import { axiosWithAuth } from '../axiosWithAuth/axiosWithAuth';
+import axios from 'axios';
 
 
 
@@ -14,21 +14,23 @@ const UserForm = ({
     touched,
     status
 }) => {
-    const [user, setUser] = useState([])  //adding so we can see the state after submit but not needed for form.
+    const [user, setUser] = useState({})  //adding so we can see the state after submit but not needed for form.
     
     useEffect(() => {
         if(status) {
             setUser([...user, status])
         }
-    }, [user, status])
+    }, [
+        // user, status
+    ])
     return (
         <Form className="form">
             <h1>Login Here!</h1>
             <h2>not a registered user yet? <Link to='/registration'><button>click here to be one</button></Link></h2>
             <label>Email
             <br />
-                { touched.username && errors.username && <p>{errors.username}</p> }   {/*This is the validation*/}
-                <Field type="text" name="email" placeholder="email"/>
+                { touched.email && errors.email && <p>{errors.email}</p> }   {/*This is the validation*/}
+                <Field type="text" name="username" placeholder="username"/>
             </label>
             <br/> 
 
@@ -38,7 +40,11 @@ const UserForm = ({
                 <Field type="password" name="password" placeholder="password" />
             </label>
             <hr/>
-                <button type="button">Login</button>
+             <button type="submit">    
+             {/* <Link to="/userHome"> */}
+               Login
+            {/* </Link> */}
+            </button>
         </Form>
     )}
 
@@ -53,19 +59,20 @@ const FormikUserForm = withFormik({
             username: yup.string().min('3', 'Username must be 3 characters or more').required("You must provide a username."),
             password: yup.string().min('9').required("Minimum 9 letters please.")
         }),
+
         
-        handleSubmit(values, { setStatus }) {
+        
+        handleSubmit( values, {props} ) {
             
             console.log("values: ", values);
-            // setNestedObjectValues(values);
-            // post api's here or schedule a timer, etc
-            axiosWithAuth()   
-                .post(`https://comake.herokuapp.com/api/auth/login`, values)
-                .then(res => {
-                    console.log("POST res", res);
-                    // setNestedObjectValues(res.data);
+            axios.post(`https://comake.herokuapp.com/api/auth/login`, values)
+                .then(res => { 
+                    localStorage.setItem('token', res.data.token);
+                    props.history.push('/userHome');
+                    console.log("POST res", res.data, values);
+                    
                 })
-                .catch(err => console.log("ERROR API", err))
+                .catch(err => alert(err.response.data.message))
         }   
 })(UserForm)
 
