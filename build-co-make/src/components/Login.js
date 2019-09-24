@@ -45,8 +45,8 @@ const UserForm = ({
 const FormikUserForm = withFormik({
         mapPropsToValues({ username, password }) {
             return {
-                "username": username || '',
-                "password": password || '',
+                username: username || '',
+                password: password || '',
             }
         },
         validationSchema: yup.object().shape({
