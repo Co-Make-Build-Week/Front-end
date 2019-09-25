@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import styled from "styled-components";
-import formMixin from "./mixins";
+import {formMixin} from "./mixins";
 
 const StyledDiv = styled.div`
   ${formMixin}
@@ -53,7 +53,7 @@ export default function SubmitIssueForm({ onSubmit }) {
                 <label>
                   <span>Category</span>
                   <Field component="select" name="category">
-                    <option value="select">Select option</option>
+                    <option value="select" className="firstOptionSelect">Select option</option>
                     <option value="roads">roads</option>
                     <option value="sidewalks">sidewalks</option>
                     <option value="landscape">landscape</option>

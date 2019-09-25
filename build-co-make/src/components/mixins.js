@@ -3,6 +3,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
+
+// VARIABLES
+
 const fontSizeForm = css`
     1.75rem;
 `;
@@ -11,7 +14,24 @@ const buttonColor = css`
     #52d5ac;
 `;
 
-const formMixin = css`
+// MIXINS
+
+// FORM WRAPPED MIXIN
+
+export const wrappedMixin = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50vw;
+  margin: 0 auto;
+  header, .form {
+    padding: 1rem 0;
+  }
+`;
+
+// FORM MIXIN
+
+export const formMixin = css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -45,6 +65,16 @@ const formMixin = css`
     font-size: ${fontSizeForm};
     padding: 0.75rem;
   }
+  .tos {
+      font-size: 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      span {
+          width: 50%;
+      }
+  }
   .button {
     display: flex;
     flex-direction: row;
@@ -59,6 +89,3 @@ const formMixin = css`
     }
   }
 `;
-
-
-export default formMixin;

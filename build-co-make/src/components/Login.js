@@ -3,23 +3,15 @@ import { Link } from "react-router-dom";
 import { withFormik, Form, Field } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+
+// RELATED TO STYLEC COMPONENTS AND IMPORTING MIXINS
 import styled from "styled-components";
-
-// IMPORT CSS MIXIN FROM MIXINS.JS FILE
-
-import formMixin from "./mixins";
+import { formMixin, wrappedMixin } from "./mixins";
 
 // styling of wrapping container
 
 const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 75vw;
-  margin: 0 auto;
-  header, .form {
-    padding: 1rem 0;
-  }
+    ${wrappedMixin};
 `;
 
 // styling of login form

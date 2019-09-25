@@ -5,21 +5,17 @@ import * as yup from "yup";
 import { axiosWithAuth } from "../axiosWithAuth/axiosWithAuth.js";
 import IssueCard from "../components/IssueCard.js";
 import SubmitIssueForm from "./submitIssueForm";
+
+// IMPORT STYLED COMPONENTS AND MIXINS
 import styled from "styled-components";
+import { wrappedMixin } from "./mixins";
 
 //redux imports
 import {connect} from 'react-redux';
 import {getUserIssues} from '../actions/index.js';
 
 const StyledDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 75vw;
-  margin: 0 auto;
-  header, .form {
-    padding: 1rem 0;
-  }
+  ${wrappedMixin};
 `;
 
 
