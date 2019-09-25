@@ -28,9 +28,9 @@ const StyledDiv = styled.div`
 export default function NavBar () {
     return (
         <StyledDiv>
-            <NavLink to='/'>Home</NavLink>
-            <NavLink to='/profile'>Profile</NavLink>
-            <NavLink to='/issues'>Issues</NavLink>
+            <NavLink to='/userHome'>Home</NavLink>
+            {/* <NavLink to='/profile'>Profile</NavLink> */}
+            <NavLink to='/issuesListPage'>Issues</NavLink>
             <NavLink to='/'>Logout</NavLink>
         </StyledDiv>
     )
