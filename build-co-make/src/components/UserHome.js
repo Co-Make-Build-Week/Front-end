@@ -11,117 +11,106 @@ import styled from "styled-components";
 import { wrappedMixin } from "./mixins";
 
 //redux imports
-import {connect} from 'react-redux';
-import {getUserIssues} from '../actions/index.js';
+import { connect } from 'react-redux';
+import { getUserIssues } from '../actions/index.js';
 
-const StyledDiv = styled.div`
+const StyledDiv = styled.div `
   ${wrappedMixin};
 `;
 
 
-const example =
-  //example data
-  [
-    {
-      id: 2,
-      upvotes: 7,
-      created_at: "2019-09-23 19:43:51",
-      updated_at: "2019-09-23 19:43:51",
-      title: "Test Issue",
-      issueLocation: "1410 N 2970 W",
-      details: "It's really annoying",
-      imageURL: "asdf.com/picture",
-      category: "pothole",
-      user_id: 2
-    },
-    {
-      id: 3,
-      upvotes: 7,
-      created_at: "2019-09-23 19:43:51",
-      updated_at: "2019-09-23 19:43:51",
-      title: "huge oil spill",
-      issueLocation: "1410 N 2970 W",
-      details: "It's splippery and causing crashes",
-      imageURL:
-        "https://www.dfa.co.za/wp-content/uploads/2017/07/DF-oilslip-2407-a.jpg",
-      category: "road debris",
-      user_id: 3
-    },
-    {
-      id: 5,
-      upvotes: 7,
-      created_at: "2019-09-23 19:43:51",
-      updated_at: "2019-09-23 19:43:51",
-      title: "Test Issue",
-      issueLocation: "1410 N 2970 W",
-      details: "It's really annoying",
-      imageURL: "asdf.com/picture",
-      category: "pothole",
-      user_id: 4
-    }
-  ];
+// const example =
+//     //example data
+//     [{
+//             id: 2,
+//             upvotes: 7,
+//             created_at: "2019-09-23 19:43:51",
+//             updated_at: "2019-09-23 19:43:51",
+//             title: "Test Issue",
+//             issueLocation: "1410 N 2970 W",
+//             details: "It's really annoying",
+//             imageURL: "asdf.com/picture",
+//             category: "pothole",
+//             user_id: 2
+//         },
+//         {
+//             id: 3,
+//             upvotes: 7,
+//             created_at: "2019-09-23 19:43:51",
+//             updated_at: "2019-09-23 19:43:51",
+//             title: "huge oil spill",
+//             issueLocation: "1410 N 2970 W",
+//             details: "It's splippery and causing crashes",
+//             imageURL: "https://www.dfa.co.za/wp-content/uploads/2017/07/DF-oilslip-2407-a.jpg",
+//             category: "road debris",
+//             user_id: 3
+//         },
+//         {
+//             id: 5,
+//             upvotes: 7,
+//             created_at: "2019-09-23 19:43:51",
+//             updated_at: "2019-09-23 19:43:51",
+//             title: "Test Issue",
+//             issueLocation: "1410 N 2970 W",
+//             details: "It's really annoying",
+//             imageURL: "asdf.com/picture",
+//             category: "pothole",
+//             user_id: 4
+//         }
+//     ];
 const UserHome = (props, { values, errors, touched, status }) => {
+const welcomeMesage = localStorage.getItem("message");
+const id = localStorage.getItem('userId');
 
 console.log(props);
 
-  const [user, setUser] = useState(); //The user we get back from /api/users/:id
-
-  // const [userID, setUserID] = useState(1); //user = the ID of the currently logged in user, passed in from props.userID
-
-  const [issues, setIssues] = useState([]); //a list of all the user's issues
-
-
-useEffect(() => {
-  props.getUserIssues();
-
-},[]);
-
-  // useEffect(() => {
-  //   //setUser(api/users/:id)
-  //   //setUserID(1); //TODO change to props.userID when we get that set up so we can pass in user id in App.js when we route to UserHome
-  //   console.log(`attempting to get api/users/${userID}`);
-  //   axiosWithAuth()
-  //     .get(`/users/${userID}/issues`)
-  //     .then(res => {
-  //       console.log(res);
-  //       setIssues(res.data.issues);
-  //     })
-  //     .catch(err => console.log("API error getting user list " + err));
-  // }, [props.userID]);
-
-const userinfoId = localStorage.getItem('userId');
-
-console.log(userinfoId);
+    const [user, setUser] = useState(); //The user we get back from /api/users/:id
+    const [issues, setIssues] = useState([]); //a list of all the user's issues
+  // const [userIssues, setUserIssues] = useState()
+    useEffect(() => {
+         props.getUserIssues(id)
 
 
-  //   useEffect(() => {
-  //     console.log("Attempting to get user issues with user ID: ", user);
-  //     setIssues(example);
-  //     // axiosWithAuth()
-  //     //     .get(`/users/:${user}`)
-  //     //     .then((res) => {
-  //     //         console.log(res);
-  //     //         setIssues(res.data);
-  //     //     })
-  //     //     .catch(err => alert("API error getting user list " + err.response.data))
-  //   }, [userID, status]); //dependant on when the user changes and when the status changes (status we set after the user submits a new issue, it contains anything)
-  
-  return (
+    }, []);
+
+    // useEffect(() => {
+    //     const id = localStorage.getItem('userId');
+    //   axiosWithAuth()
+    //   .get(`/auth/users/${id}/issues`, id)
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {})
+    // },[])
+
+
+  //           if(!props.userIssues.length){
+  //     return <div>No Current Submitted Issues At This Time......Make One</div>;
+  // };
+  // {}
+
+    return ( 
     <StyledDiv>
-      <header>
-        <h1>Welcome to your profile page.</h1>
-        <Link to="/issuesListPage">All Local Issues</Link>
-      </header>
+        <header>
+        <h1> 
+          {!props.userIssues.length ? "No Current Submitted Issues At This Time......Make One" : welcomeMesage}
+       </h1> 
+       <h3>Current Issues: {props.userIssues.length}</h3>
+        <Link to = "/issuesListPage" > All Local Issues </Link> 
+        </header>
 
-      {/*NEW ISSUE FORM*/}
-      <SubmitIssueForm />
+        { /*NEW ISSUE FORM*/ } <
+        SubmitIssueForm / >
 
-      {/*USER'S ISSUE LIST*/}
-      {issues.map(item => {
-        return <IssueCard issue={item} showButtons={true} />;
-      })}
-    </StyledDiv>
-  );
+        { /*USER'S ISSUE LIST*/ } {
+            props.userIssues.map(item => {
+                return <IssueCard issue = { item }
+                showButtons = { true }
+                />;
+            })
+        } 
+        </StyledDiv>
+    );
 };
 // export default UserHome;
 
@@ -159,14 +148,11 @@ console.log(userinfoId);
 // })(UserHome);
 
 const mapStateToProps = (state) => {
-  console.log('make me sick', state);
-  return {
-    state
-  }
+    console.log('make me sick', state);
+    const {userIssues}= state;
+    return {
+        userIssues
+    }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-// // someAction: values => 
-// //   dispatch({type:})
-// }
-export default connect(mapStateToProps, {getUserIssues})(UserHome);
+export default connect(mapStateToProps, { getUserIssues })(UserHome);

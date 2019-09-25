@@ -28,8 +28,9 @@ export const FETCH_USERISSUES_FAILURE = 'FETCH_USERISSUES_FAILURE';
 export const getUserIssues = (userId) => dispatch => {
     dispatch({ type: FETCH_USERISSUES_START });
     axiosWithAuth()
-        .get(`/users/${userId}/issues`)
+        .get(`/auth/users/${userId}/issues`)
         .then(res => {
+            console.log('hello from actions');
             dispatch({ type: FETCH_USERISSUES_SUCCESS, payload: res.data })
         })
         .catch(err => {
@@ -62,15 +63,15 @@ export const UPDATE_ISSUES_SUCCESS = 'UPDATE_ISSUES_SUCCESS';
 export const UPDATE_ISSUES_FAILURE = 'UPDATE_ISSUES_FAILURE';
 
 export const updateIssue = (issueId) => dispatch => {
-    dispatch({type: UPDATE_ISSUES_START});
+    dispatch({ type: UPDATE_ISSUES_START });
     axiosWithAuth()
-    .put(`/issues/${issueId}`)
-    .then(res => {
-        dispatch({type: UPDATE_ISSUES_SUCCESS, payload: res.data})
-    })
-    .catch(err => {
-        dispatch({type: UPDATE_ISSUES_FAILURE, payload: err.response});
-    });
+        .put(`/issues/${issueId}`)
+        .then(res => {
+            dispatch({ type: UPDATE_ISSUES_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            dispatch({ type: UPDATE_ISSUES_FAILURE, payload: err.response });
+        });
 };
 
 //to vote then .put the vote value
@@ -79,15 +80,15 @@ export const UPDATE_VOTE_SUCCESS = 'UPDATE_VOTE_SUCCESS';
 export const UPDATE_VOTE_FAILURE = 'UPDATE_VOTE_FAILURE';
 
 export const theVote = (issueId) => dispatch => {
-    dispatch({type:UPDATE_VOTE_START});
+    dispatch({ type: UPDATE_VOTE_START });
     axiosWithAuth()
-    .put(`/issues/${issueId}/vote`)
-    .then(res => {
-        dispatch({type: UPDATE_VOTE_SUCCESS, payload:res.data})
-    })
-    .catch(err => {
-        dispatch({type: UPDATE_VOTE_FAILURE, payload: err.response});
-    });
+        .put(`/issues/${issueId}/vote`)
+        .then(res => {
+            dispatch({ type: UPDATE_VOTE_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            dispatch({ type: UPDATE_VOTE_FAILURE, payload: err.response });
+        });
 };
 
 export const deleteIssues = (issueId) => dispatch => {

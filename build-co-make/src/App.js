@@ -12,6 +12,8 @@ import PrivateRoute from './components/PrivateRoute';
 import SubmitIssueForm from "./components/submitIssueForm";
 
 function App() {
+
+  const id = localStorage.getItem('userId');
   // NEW ISSUE STATE
 
   const [newIssue, setNewIssue] = useState({});
@@ -30,7 +32,8 @@ console.log("hello from app.js");
         <PrivateRoute path="/userHome" component={NavBar}/>
         <PrivateRoute path="/issuesListPage" component={NavBar}/>
 
-        <PrivateRoute path="/userHome" component={UserHome} />
+        <PrivateRoute path="/userHome/" component={UserHome} />
+        {/* <PrivateRoute path='/userHome/:id' component={UserHome}/> */}
         <PrivateRoute path="/issuesListPage" component={IssuesListPage} />
 
         {/* ROUTE FOR PAGE WITH FORM TO SUBMIT ISSUE */}
