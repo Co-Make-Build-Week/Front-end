@@ -1,6 +1,56 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
+import styled from "styled-components";
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  label {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    font-size: 1.75rem;
+    margin: 0.5rem;
+    span {
+      flex-grow: 1;
+    }
+    input,
+    select {
+      font-size: 1.75rem;
+      padding: 0.75rem;
+      margin-left: 1rem;
+      flex-grow: 2;
+      border-style: 0.75px solid #ffffff;
+    }
+  }
+  .errorMessage {
+    color: red;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+  }
+  textarea {
+    margin-top: 0.5rem;
+    width: 100%;
+    font-size: 1.75rem;
+    padding: 0.75rem;
+  }
+  .button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0.5rem;
+    button {
+      font-size: 1.75rem;
+      border: none;
+      border-radius: 5px;
+      padding: 0.5rem;
+      background: #52D5AC;
+    }
+  }
+`;
 
 const validationSchema = yup.object().shape({
   issue: yup
@@ -18,65 +68,83 @@ const validationSchema = yup.object().shape({
 });
 
 export default function SubmitIssueForm({ onSubmit }) {
-
   return (
-    <div>
+    <StyledDiv className="form">
       <Formik
         validationSchema={validationSchema}
         initialValues={{
           issue: "",
           category: "",
           address: "",
-          textarea: "",
+          textarea: ""
         }}
         onSubmit={onSubmit}
         render={props => {
           return (
             <Form>
-              <div>
+              <div className="input-field">
                 <label>
-                  Issue
+                  <span>Issue</span>
                   <Field name="issue" type="text" placeholder="issue" />
-                  <ErrorMessage name="issue" component="div" />
                 </label>
+                <ErrorMessage
+                  name="issue"
+                  component="div"
+                  className="errorMessage"
+                />
               </div>
               <div>
                 <label>
-                  Category
+                  <span>Category</span>
                   <Field component="select" name="category">
                     <option value="select">Select option</option>
-                    <option value="potholes">Potholes</option>
-                    <option value="trees">Trees</option>
-                    <option value="sidewalks">Sidewalks</option>
+                    <option value="roads">roads</option>
+                    <option value="sidewalks">sidewalks</option>
+                    <option value="landscape">landscape</option>
+                    <option value="debris">debris</option>
+                    <option value="other">other</option>
                   </Field>
-                  <ErrorMessage name="category" component="div" />
                 </label>
+                <ErrorMessage
+                  name="category"
+                  component="div"
+                  className="errorMessage"
+                />
               </div>
               <div>
                 <label>
-                  Address
+                  <span>Address</span>
                   <Field name="address" type="text" placeholder="address" />
-                  <ErrorMessage name="address" component="div" />
                 </label>
+                <ErrorMessage
+                  name="address"
+                  component="div"
+                  className="errorMessage"
+                />
               </div>
               <div>
                 <label>
-                  Tell us more:
+                  <span>Tell us more:</span>
                   <Field
                     component="textarea"
                     name="textarea"
                     placeholder="tell us more"
+                    rows="3"
                   />
-                  <ErrorMessage name="textarea" component="div" />
                 </label>
+                <ErrorMessage
+                  name="textarea"
+                  component="div"
+                  className="errorMessage"
+                />
               </div>
-              <div>
+              <div className="button">
                 <button type="submit">Submit Issue</button>
               </div>
             </Form>
           );
         }}
       />
-    </div>
+    </StyledDiv>
   );
 }

@@ -5,10 +5,22 @@ import * as yup from "yup";
 import { axiosWithAuth } from "../axiosWithAuth/axiosWithAuth.js";
 import IssueCard from "../components/IssueCard.js";
 import SubmitIssueForm from "./submitIssueForm";
+import styled from "styled-components";
 
 //redux imports
 import {connect} from 'react-redux';
 import {getUserIssues} from '../actions/index.js';
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 75vw;
+  margin: 0 auto;
+  header, .form {
+    padding: 1rem 0;
+  }
+`;
 
 
 const example =
@@ -53,6 +65,7 @@ const example =
     }
   ];
 const UserHome = (props, { values, errors, touched, status }) => {
+
 console.log(props);
 
   const [user, setUser] = useState(); //The user we get back from /api/users/:id
@@ -98,7 +111,7 @@ console.log(userinfoId);
   //   }, [userID, status]); //dependant on when the user changes and when the status changes (status we set after the user submits a new issue, it contains anything)
   
   return (
-    <div>
+    <StyledDiv>
       <header>
         <h1>Welcome to your profile page.</h1>
         <Link to="/issuesListPage">All Local Issues</Link>
@@ -111,7 +124,7 @@ console.log(userinfoId);
       {issues.map(item => {
         return <IssueCard issue={item} showButtons={true} />;
       })}
-    </div>
+    </StyledDiv>
   );
 };
 // export default UserHome;
