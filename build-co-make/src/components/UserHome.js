@@ -4,11 +4,19 @@ import { withFormik, Form, Field } from "formik";
 import * as yup from "yup";
 import { axiosWithAuth } from "../axiosWithAuth/axiosWithAuth.js";
 import IssueCard from "../components/IssueCard.js";
-import SubmitIssueForm from "./SubmitIssueForm.js";
+import SubmitIssueForm from "./submitIssueForm";
+
+// IMPORT STYLED COMPONENTS AND MIXINS
+import styled from "styled-components";
+import { wrappedMixin } from "./mixins";
 
 //redux imports
 import {connect} from 'react-redux';
 import {getUserIssues} from '../actions/index.js';
+
+const StyledDiv = styled.div`
+  ${wrappedMixin};
+`;
 
 
 const example =
@@ -53,6 +61,7 @@ const example =
     }
   ];
 const UserHome = (props, { values, errors, touched, status }) => {
+
 console.log(props);
 
   const [user, setUser] = useState(); //The user we get back from /api/users/:id
@@ -98,7 +107,7 @@ console.log(userinfoId);
   //   }, [userID, status]); //dependant on when the user changes and when the status changes (status we set after the user submits a new issue, it contains anything)
   
   return (
-    <div>
+    <StyledDiv>
       <header>
         <h1>Welcome to your profile page.</h1>
         <Link to="/issuesListPage">All Local Issues</Link>
@@ -111,7 +120,7 @@ console.log(userinfoId);
       {issues.map(item => {
         return <IssueCard issue={item} showButtons={true} />;
       })}
-    </div>
+    </StyledDiv>
   );
 };
 // export default UserHome;

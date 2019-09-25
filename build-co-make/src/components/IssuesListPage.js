@@ -5,7 +5,8 @@ import {getAllIssues} from '../actions/index.js';
 
 import IssueCard from './IssueCard.js';
 
-import 'styled-components';
+// IMPORT STYLED COMPONENTS AND CSS MIXINS
+import styled from 'styled-components';
 
 //first stop for state
 //then goes to profile page and card view of individual {id} issue.

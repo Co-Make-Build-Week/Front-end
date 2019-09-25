@@ -1,6 +1,12 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
+import styled from "styled-components";
+import {formMixin} from "./mixins";
+
+const StyledDiv = styled.div`
+  ${formMixin}
+`;
 
 const validationSchema = yup.object().shape({
   issue: yup
@@ -18,65 +24,83 @@ const validationSchema = yup.object().shape({
 });
 
 export default function SubmitIssueForm({ onSubmit }) {
-
   return (
-    <div>
+    <StyledDiv className="form">
       <Formik
         validationSchema={validationSchema}
         initialValues={{
           issue: "",
           category: "",
           address: "",
-          textarea: "",
+          textarea: ""
         }}
         onSubmit={onSubmit}
         render={props => {
           return (
             <Form>
-              <div>
+              <div className="input-field">
                 <label>
-                  Issue
+                  <span>Issue</span>
                   <Field name="issue" type="text" placeholder="issue" />
-                  <ErrorMessage name="issue" component="div" />
                 </label>
+                <ErrorMessage
+                  name="issue"
+                  component="div"
+                  className="errorMessage"
+                />
               </div>
               <div>
                 <label>
-                  Category
+                  <span>Category</span>
                   <Field component="select" name="category">
-                    <option value="select">Select option</option>
-                    <option value="potholes">Potholes</option>
-                    <option value="trees">Trees</option>
-                    <option value="sidewalks">Sidewalks</option>
+                    <option value="select" className="firstOptionSelect">Select option</option>
+                    <option value="roads">roads</option>
+                    <option value="sidewalks">sidewalks</option>
+                    <option value="landscape">landscape</option>
+                    <option value="debris">debris</option>
+                    <option value="other">other</option>
                   </Field>
-                  <ErrorMessage name="category" component="div" />
                 </label>
+                <ErrorMessage
+                  name="category"
+                  component="div"
+                  className="errorMessage"
+                />
               </div>
               <div>
                 <label>
-                  Address
+                  <span>Address</span>
                   <Field name="address" type="text" placeholder="address" />
-                  <ErrorMessage name="address" component="div" />
                 </label>
+                <ErrorMessage
+                  name="address"
+                  component="div"
+                  className="errorMessage"
+                />
               </div>
               <div>
                 <label>
-                  Tell us more:
+                  <span>Tell us more:</span>
                   <Field
                     component="textarea"
                     name="textarea"
                     placeholder="tell us more"
+                    rows="3"
                   />
-                  <ErrorMessage name="textarea" component="div" />
                 </label>
+                <ErrorMessage
+                  name="textarea"
+                  component="div"
+                  className="errorMessage"
+                />
               </div>
-              <div>
+              <div className="button">
                 <button type="submit">Submit Issue</button>
               </div>
             </Form>
           );
         }}
       />
-    </div>
+    </StyledDiv>
   );
 }
