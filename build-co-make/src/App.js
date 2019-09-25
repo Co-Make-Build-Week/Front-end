@@ -6,9 +6,10 @@ import UserHome from "./components/UserHome.js";
 import IssuesListPage from "./components/IssuesListPage.js";
 import NavBar from "./components/Navheader";
 import './App.scss';
+import PrivateRoute from './components/PrivateRoute';
 
 // IMPORT SUBMIT ISSUE FORM
-import SubmitIssueForm from "./components/submitIssueForm";
+import SubmitIssueForm from "./components/SubmitIssueForm";
 
 function App() {
   // NEW ISSUE STATE
@@ -23,15 +24,17 @@ function App() {
 console.log("hello from app.js");
   return (
     <div className="App">
-      <NavBar />
+      {/* <NavBar /> */}
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/registration" component={Registration} />
-        <Route exact path="/userHome" component={UserHome} />
-        <Route path="/issuesListPage" component={IssuesListPage} />
+        <PrivateRoute exact path="/userHome" component={UserHome} />
+        <PrivateRoute exact path="/issuesListPage" component={IssuesListPage} />
+        <PrivateRoute  path="/userHome" component={NavBar}/>
+        <PrivateRoute  path="/issuesListPage" component={NavBar}/>
 
         {/* ROUTE FOR PAGE WITH FORM TO SUBMIT ISSUE */}
-        <Route
+        <PrivateRoute
           path="/submitIssue"
           render={props => {
             return <SubmitIssueForm onSubmit={onSubmitIssue} />;

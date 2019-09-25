@@ -78,7 +78,7 @@ export const UPDATE_VOTE_START = 'UPDATE_VOTE_START';
 export const UPDATE_VOTE_SUCCESS = 'UPDATE_VOTE_SUCCESS';
 export const UPDATE_VOTE_FAILURE = 'UPDATE_VOTE_FAILURE';
 
-export const theVote = () => dispatch => {
+export const theVote = (issueId) => dispatch => {
     dispatch({type:UPDATE_VOTE_START});
     axiosWithAuth()
     .put(`/issues/${issueId}/vote`)

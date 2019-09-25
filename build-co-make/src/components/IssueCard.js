@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-// Example issue right now: {
-//     "id": 2,
-//     "upvotes": 7,
-//     "created_at": "2019-09-23 19:43:51",
-//     "updated_at": "2019-09-23 19:43:51",
-//     "title": "Test Issue",
-//     "issueLocation": "1410 N 2970 W",
-//     "details": "It's really annoying",
-//     "imageURL": "asdf.com/picture",
-//     "category": "pothole",
-//     "user_id": 2
-//    }
 
 function IssueCard(props) {
-
+console.log(props);
     const [issue, setIssue] = useState();
 
     useEffect(() => {

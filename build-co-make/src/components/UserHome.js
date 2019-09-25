@@ -4,7 +4,7 @@ import { withFormik, Form, Field } from "formik";
 import * as yup from "yup";
 import { axiosWithAuth } from "../axiosWithAuth/axiosWithAuth.js";
 import IssueCard from "../components/IssueCard.js";
-import SubmitIssueForm from "../components/SubmitIssueForm.js";
+import SubmitIssueForm from "./SubmitIssueForm.js";
 
 const example =
   //example data
