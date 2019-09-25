@@ -36,7 +36,7 @@ localStorage.removeItem('token');
             <NavLink to='/userHome'>Home</NavLink>
                         {/* <NavLink to='/profile'>Profile</NavLink> */}
             <NavLink to='/issuesListPage'>Issues</NavLink>
-            <button onClick={logout} >Logout</button>
+            <NavLink to="/"><button onClick={logout} >Logout</button></NavLink>
         </StyledDiv>
     )
 }

@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage, withFormik } from "formik";
 import * as yup from "yup";
 import styled from "styled-components";
 import { formMixin } from "./mixins";
-import axiosWithAuth from "../axiosWithAuth/axiosWithAuth.js";
+import {axiosWithAuth} from "../axiosWithAuth/axiosWithAuth.js";
 
 //redux imports
 import {connect} from 'react-redux';

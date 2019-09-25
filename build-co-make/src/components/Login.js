@@ -99,7 +99,8 @@ const FormikUserForm = withFormik({
       .post(`https://comake.herokuapp.com/api/auth/login`, values)
       .then(res => {
         localStorage.setItem("token", res.data.token);
-        // localStorage.setItem('userId', res.data.id);
+        localStorage.setItem("userId", res.data.userId);
+        localStorage.setItem("message", res.data.message);
         props.history.push("/userHome");
         console.log("POST res", res.data, values);
       })
