@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import formMixin from "./mixins";
 
 const StyledDiv = styled.div`

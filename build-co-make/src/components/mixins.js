@@ -1,3 +1,6 @@
+// CSS MIXINS THAT WILL BE REUSED ACROSS THE APP
+
+
 import React from "react";
 import styled, { css } from "styled-components";
 
