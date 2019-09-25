@@ -36,7 +36,7 @@ const UserHome = ({issues}) => {
     };
 
     const handleEdit = () => {
-        issue: editIssue
+    //     // issue: editIssue; 
     };
             
           

@@ -21,7 +21,7 @@ function App() {
   const onSubmitIssue = formValues => {
     setNewIssue(formValues);
   };
-
+console.log("hello from app.js");
   return (
     <div className="App">
       <NavBar />
