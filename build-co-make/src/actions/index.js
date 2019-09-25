@@ -45,13 +45,16 @@ export const POST_ALLISSUES_SUCCESS = 'POST_ISSUES_SUCCESS';
 export const POST_ALLISSUES_FAILURE = 'POST_ISUES_FAILURE';
 
 export const addIssue = (issue) => dispatch => {
+    console.log("addIssue")
     dispatch({ type: POST_ALLISSUES_START });
     axiosWithAuth()
         .post('/issues', issue)
         .then(res => {
+            console.log("Working")
             dispatch({ type: POST_ALLISSUES_SUCCESS, payload: res.data });
         })
         .catch(err => {
+            console.log("erroring")
             dispatch({ type: POST_ALLISSUES_FAILURE, payload: err.response });
         });
 };
