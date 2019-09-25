@@ -4,7 +4,7 @@ import { withFormik, Form, Field } from "formik";
 import * as yup from "yup";
 import { axiosWithAuth } from "../axiosWithAuth/axiosWithAuth.js";
 import IssueCard from "../components/IssueCard.js";
-import SubmitIssueForm from "./SubmitIssueForm.js";
+import SubmitIssueForm from "./submitIssueForm";
 
 //redux imports
 import {connect} from 'react-redux';
