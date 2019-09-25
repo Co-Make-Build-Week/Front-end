@@ -6,6 +6,11 @@ import { axiosWithAuth } from "../axiosWithAuth/axiosWithAuth.js";
 import IssueCard from "../components/IssueCard.js";
 import SubmitIssueForm from "./SubmitIssueForm.js";
 
+//redux imports
+import {connect} from 'react-redux';
+import {getUserIssues} from '../actions/index.js';
+
+
 const example =
   //example data
   [
@@ -48,24 +53,37 @@ const example =
     }
   ];
 const UserHome = (props, { values, errors, touched, status }) => {
+console.log(props);
+
   const [user, setUser] = useState(); //The user we get back from /api/users/:id
 
-  const [userID, setUserID] = useState(1); //user = the ID of the currently logged in user, passed in from props.userID
+  // const [userID, setUserID] = useState(1); //user = the ID of the currently logged in user, passed in from props.userID
 
   const [issues, setIssues] = useState([]); //a list of all the user's issues
 
-  useEffect(() => {
-    //setUser(api/users/:id)
-    //setUserID(1); //TODO change to props.userID when we get that set up so we can pass in user id in App.js when we route to UserHome
-    console.log(`attempting to get api/users/${userID}`);
-    axiosWithAuth()
-      .get(`/users/${userID}`)
-      .then(res => {
-        console.log(res);
-        setIssues(res.data.issues);
-      })
-      .catch(err => console.log("API error getting user list " + err));
-  }, [props.userID]);
+
+useEffect(() => {
+  props.getUserIssues();
+
+},[]);
+
+  // useEffect(() => {
+  //   //setUser(api/users/:id)
+  //   //setUserID(1); //TODO change to props.userID when we get that set up so we can pass in user id in App.js when we route to UserHome
+  //   console.log(`attempting to get api/users/${userID}`);
+  //   axiosWithAuth()
+  //     .get(`/users/${userID}/issues`)
+  //     .then(res => {
+  //       console.log(res);
+  //       setIssues(res.data.issues);
+  //     })
+  //     .catch(err => console.log("API error getting user list " + err));
+  // }, [props.userID]);
+
+const userinfoId = localStorage.getItem('userId');
+
+console.log(userinfoId);
+
 
   //   useEffect(() => {
   //     console.log("Attempting to get user issues with user ID: ", user);
@@ -96,38 +114,50 @@ const UserHome = (props, { values, errors, touched, status }) => {
     </div>
   );
 };
+// export default UserHome;
 
-const FormikUserHome = withFormik({
-  mapPropsToValues({ title, category, details }) {
-    return {
-      title: title || "",
-      category: category || "other",
-      details: details || ""
-    };
-  },
-  validationSchema: yup.object().shape({
-    title: yup
-      .string()
-      .min("5", "Title must be five characters or more")
-      .required("You must provide a title."),
-    details: yup
-      .string()
-      .min("3", "Details must be three characters or more")
-      .required("You must provide details.")
-  }),
+// const FormikUserHome = withFormik({
+//   mapPropsToValues({ title, category, details }) {
+//     return {
+//       title: title || "",
+//       category: category || "other",
+//       details: details || ""
+//     };
+//   },
+//   validationSchema: yup.object().shape({
+//     title: yup
+//       .string()
+//       .min("5", "Title must be five characters or more")
+//       .required("You must provide a title."),
+//     details: yup
+//       .string()
+//       .min("3", "Details must be three characters or more")
+//       .required("You must provide details.")
+//   }),
 
-  handleSubmit(values, { props }) {
-    //TODO change to submit new issue
-    console.log("values: ", values);
-    // axios
-    //   .post(`https://comake.herokuapp.com/api/issues`, values)
-    //   .then(res => {
-    //     console.log("POST res", res.data);
-    //     props.history.push("/userHome");
-    //     console.log(JSON.stringify(values));
-    //   })
-    //   .catch(err => alert(err.response.data.message));
+//   handleSubmit(values, { props }) {
+//     //TODO change to submit new issue
+//     console.log("values: ", values, props);
+//     // axios
+//     //   .post(`https://comake.herokuapp.com/api/issues`, values)
+//     //   .then(res => {
+//     //     console.log("POST res", res.data);
+//     //     props.history.push("/userHome");
+//     //     console.log(JSON.stringify(values));
+//     //   })
+//     //   .catch(err => alert(err.response.data.message));
+//   }
+// })(UserHome);
+
+const mapStateToProps = (state) => {
+  console.log('make me sick', state);
+  return {
+    state
   }
-})(UserHome);
+}
 
-export default FormikUserHome;
+// const mapDispatchToProps = (dispatch) => {
+// // someAction: values => 
+// //   dispatch({type:})
+// }
+export default connect(mapStateToProps, {getUserIssues})(UserHome);

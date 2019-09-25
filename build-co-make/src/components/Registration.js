@@ -62,6 +62,7 @@ const FormikUserForm = withFormik({
             axios.post(`https://comake.herokuapp.com/api/auth/register`, values)
                 .then(res => {
                     console.log("POST res", res.data);
+                    localStorage.setItem('userId',res.data.id);
                     props.history.push('/userHome');
                     console.log(JSON.stringify(values));
                     

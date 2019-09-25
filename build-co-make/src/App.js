@@ -24,14 +24,14 @@ function App() {
 console.log("hello from app.js");
   return (
     <div className="App">
-      {/* <NavBar /> */}
-      {/* <Switch> */}
         <Route exact path="/" component={Login} />
         <Route exact path="/registration" component={Registration} />
+          
+        <PrivateRoute path="/userHome" component={NavBar}/>
+        <PrivateRoute path="/issuesListPage" component={NavBar}/>
+
         <PrivateRoute path="/userHome" component={UserHome} />
-        <PrivateRoute  path="/issuesListPage" component={IssuesListPage} />
-        <PrivateRoute  path="/userHome" component={NavBar}/>
-        <PrivateRoute  path="/issuesListPage" component={NavBar}/>
+        <PrivateRoute path="/issuesListPage" component={IssuesListPage} />
 
         {/* ROUTE FOR PAGE WITH FORM TO SUBMIT ISSUE */}
         <PrivateRoute
@@ -41,7 +41,6 @@ console.log("hello from app.js");
           }}
         />
         {/* <Route path="/issue/:id" component={IssuePage}/> */}
-      {/* </Switch> */}
     </div>
   );
 }
