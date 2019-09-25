@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // Example issue right now: {
 //     "id": 2,
@@ -36,15 +37,19 @@ function IssueCard(props) {
     if(!issue) return <p>Loading...</p>
 
     return (
-        <div>
-            <img src={issue.imageURL} />
-            <h2>{issue.title} - {issue.category}</h2>
-            <p>{issue.details}</p>
-            <p>By user {issue.user_id} (TODO: get username by id)</p>
-            <p>Upvotes: {issue.upvotes}</p>
-            {issueButtons}
-        </div>
+        <>
+            <Link to={`/issues/${issue.id}`}>
+                <div className="card">
+                    <h2>{issue.title} - {issue.category}</h2>
+                    <p>{issue.details}</p>
+                    <p>By user {issue.user_id} (TODO: get username by id)</p>
+                    <p>Upvotes: {issue.upvotes}</p>
+                    {issueButtons}
+                    <img src={issue.imageURL} className="pic" />
+                </div>
+            </Link>
+        </>
     );
-}
+};
 
 export default IssueCard;
