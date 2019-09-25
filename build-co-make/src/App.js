@@ -25,11 +25,11 @@ console.log("hello from app.js");
   return (
     <div className="App">
       {/* <NavBar /> */}
-      <Switch>
+      {/* <Switch> */}
         <Route exact path="/" component={Login} />
         <Route exact path="/registration" component={Registration} />
-        <PrivateRoute exact path="/userHome" component={UserHome} />
-        <PrivateRoute exact path="/issuesListPage" component={IssuesListPage} />
+        <PrivateRoute path="/userHome" component={UserHome} />
+        <PrivateRoute  path="/issuesListPage" component={IssuesListPage} />
         <PrivateRoute  path="/userHome" component={NavBar}/>
         <PrivateRoute  path="/issuesListPage" component={NavBar}/>
 
@@ -41,7 +41,7 @@ console.log("hello from app.js");
           }}
         />
         {/* <Route path="/issue/:id" component={IssuePage}/> */}
-      </Switch>
+      {/* </Switch> */}
     </div>
   );
 }
