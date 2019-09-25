@@ -2,6 +2,9 @@ import {
     FETCH_ALLISSUES_START,
     FETCH_ALLISSUES_SUCCESS,
     FETCH_ALLISSUES_FAILURE,
+    FETCH_USER_START,
+    FETCH_USER_SUCCESS,
+    FETCH_USER_FAILURE,
     FETCH_USERISSUES_START,
     FETCH_USERISSUES_SUCCESS,
     FETCH_USERISSUES_FAILURE,
@@ -19,7 +22,8 @@ import {
 
 const initialState = {
     issues: [],
-    user: [],
+    userIssues: [],
+    userInfo: [],
     isLoading: false,
     error: '',
 
@@ -77,7 +81,7 @@ export const issuesReducer = (state = initialState, action) => {
         case FETCH_USERISSUES_SUCCESS:
                 return {
                     ...state,
-                    user: [...action.payload],
+                    userIssues: [...action.payload],
                     isLoading: false,
                     error: ''
                 }

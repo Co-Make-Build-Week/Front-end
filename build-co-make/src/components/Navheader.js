@@ -25,13 +25,18 @@ const StyledDiv = styled.div`
     }
 `;
 
-export default function NavBar () {
+export default function NavBar (props) {
+console.log(props);
+const logout = (props) => {
+localStorage.removeItem('token');
+}
+
     return (
         <StyledDiv>
             <NavLink to='/userHome'>Home</NavLink>
-            {/* <NavLink to='/profile'>Profile</NavLink> */}
+                        {/* <NavLink to='/profile'>Profile</NavLink> */}
             <NavLink to='/issuesListPage'>Issues</NavLink>
-            <NavLink to='/'>Logout</NavLink>
+            <NavLink onClick={logout} >Logout</NavLink>
         </StyledDiv>
     )
 }
