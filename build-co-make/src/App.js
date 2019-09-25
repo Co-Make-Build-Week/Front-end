@@ -9,7 +9,7 @@ import './App.scss';
 import PrivateRoute from './components/PrivateRoute';
 
 // IMPORT SUBMIT ISSUE FORM
-import SubmitIssueForm from "./components/submitIssueForm";
+import SubmitIssueForm from "./components/SubmitIssueForm";
 
 function App() {
   // NEW ISSUE STATE
