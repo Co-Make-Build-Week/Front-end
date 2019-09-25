@@ -1,160 +1,133 @@
-import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
-import { Form, Field, withFormik } from 'formik';
-import axios from 'axios';
-import yup from 'yup'
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { withFormik, Form, Field } from "formik";
+import * as yup from "yup";
+import { axiosWithAuth } from "../axiosWithAuth/axiosWithAuth.js";
+import IssueCard from "../components/IssueCard.js";
+import SubmitIssueForm from "../components/SubmitIssueForm.js";
 
-//first stop for state
-
-
-const UserHome = ({issues}) => {
-
-    const [item, setItem] = useState({
-        issue: "",
-        // user_id: localStorage.getItem("id"),
-        editing: false
-      });
-    
-    const initialIssue = {
-    note: ""
-    };
-    
-    const [editIssue, setEditIssue] = useState(initialIssue);
-
-    const handleSubmit = () => {
-       // event.preventDefault();
-      console.log("item", item);
-     // props.postData(item);
-      setItem({
-        issue: ""
-      });
+const example =
+  //example data
+  [
+    {
+      id: 2,
+      upvotes: 7,
+      created_at: "2019-09-23 19:43:51",
+      updated_at: "2019-09-23 19:43:51",
+      title: "Test Issue",
+      issueLocation: "1410 N 2970 W",
+      details: "It's really annoying",
+      imageURL: "asdf.com/picture",
+      category: "pothole",
+      user_id: 2
+    },
+    {
+      id: 3,
+      upvotes: 7,
+      created_at: "2019-09-23 19:43:51",
+      updated_at: "2019-09-23 19:43:51",
+      title: "huge oil spill",
+      issueLocation: "1410 N 2970 W",
+      details: "It's splippery and causing crashes",
+      imageURL:
+        "https://www.dfa.co.za/wp-content/uploads/2017/07/DF-oilslip-2407-a.jpg",
+      category: "road debris",
+      user_id: 3
+    },
+    {
+      id: 5,
+      upvotes: 7,
+      created_at: "2019-09-23 19:43:51",
+      updated_at: "2019-09-23 19:43:51",
+      title: "Test Issue",
+      issueLocation: "1410 N 2970 W",
+      details: "It's really annoying",
+      imageURL: "asdf.com/picture",
+      category: "pothole",
+      user_id: 4
     }
+  ];
+const UserHome = (props, { values, errors, touched, status }) => {
+  const [user, setUser] = useState(); //The user we get back from /api/users/:id
 
-    const handleChange = event => {
-        console.log(item);
-        setItem({ ...item, [event.target.name]: event.target.value });
-    };
+  const [userID, setUserID] = useState(1); //user = the ID of the currently logged in user, passed in from props.userID
 
-    const handleEdit = () => {
-    //     // issue: editIssue; 
-    };
-            
-          
-            //   axios
-            //     .put(
-            //      ``,
-            //       editNote
-            //     )
-            //     .then(res => {
-            //       console.log(res);
-            //       window.location.reload();
-            //       setItem({ issue: "" });
-            //     })
-          
-            //     .catch(err => console.error("error", err.response));
-            //};
+  const [issues, setIssues] = useState([]); //a list of all the user's issues
 
-            const handleDelete = postId => {
-                //let newFilter = post.filter(element => element.id === post.id);
-                // axios
-                //     .delete(
-                //     ``
-                //     )
-                //     .then(response => {
-                //     window.location.reload();
-                //     console.log(response);
-                //     })
-                //     .catch(error => {
-                //     console.log(error.response);
-                //     });
-            };
-                  
+  useEffect(() => {
+    //setUser(api/users/:id)
+    //setUserID(1); //TODO change to props.userID when we get that set up so we can pass in user id in App.js when we route to UserHome
+    console.log(`attempting to get api/users/${userID}`);
+    axiosWithAuth()
+      .get(`/users/${userID}`)
+      .then(res => {
+        console.log(res);
+        setIssues(res.data.issues);
+      })
+      .catch(err => console.log("API error getting user list " + err));
+  }, [props.userID]);
 
-    return(
-        <div>
-            <header>
-                <h1>Welcome {issues.email}!</h1>
-                <Link to="/issuesListPage">All Local Issues</Link>
-            </header>
-            <hr/>
-            <Form onSubmit={handleSubmit}>
-                <div className="user-input-form">
-                    <Field
-                    className="input-field"
-                    type="textarea"
-                    value="issue"
-                    name="issue"
-                    onChange={handleChange}
-                    />
-                    <button
-                    className="submit-button"
-                    value="Submit"
-                    type="submit"
-                    >
-                    Add new issue
-                    </button>
-                </div>
-            </Form>
-            <hr />
-            <br></br>
-            {issues.map(issue => {
-                return (
-                    <div className="today-quote">
-                    <h1>{issue}</h1>
-                    <button
-                        className="user-list"
-                        onClick={() => handleDelete(issues.id)}
-                    >
-                        Delete today's note
-                    </button>
-                    {/* <button onClick={toggleEditing}>Redo today's note</button> */}
-                    <div className="editBlock">
-                        <input
-                        //placeholder="Edit your issue here"
-                        onChange={e =>
-                            setEditIssue({ ...editIssue, issue: e.target.value })
-                        }
-                        value={editIssue.issue}
-                        />
-                        <button
-                        className="edit-button"
-                        onClick={() => handleEdit(issues.id)}
-                        >
-                        Submit edit
-                        </button>
-                    </div>
-                    </div>
-                );
-            })}
-        </div>
-    );
-    
-}
+  //   useEffect(() => {
+  //     console.log("Attempting to get user issues with user ID: ", user);
+  //     setIssues(example);
+  //     // axiosWithAuth()
+  //     //     .get(`/users/:${user}`)
+  //     //     .then((res) => {
+  //     //         console.log(res);
+  //     //         setIssues(res.data);
+  //     //     })
+  //     //     .catch(err => alert("API error getting user list " + err.response.data))
+  //   }, [userID, status]); //dependant on when the user changes and when the status changes (status we set after the user submits a new issue, it contains anything)
+  
+  return (
+    <div>
+      <header>
+        <h1>Welcome to your profile page.</h1>
+        <Link to="/issuesListPage">All Local Issues</Link>
+      </header>
+
+      {/*NEW ISSUE FORM*/}
+      <SubmitIssueForm />
+
+      {/*USER'S ISSUE LIST*/}
+      {issues.map(item => {
+        return <IssueCard issue={item} showButtons={true} />;
+      })}
+    </div>
+  );
+};
 
 const FormikUserHome = withFormik({
-    mapPropsToValues({}) {
-        return {
-            
-        }
-    },
-    // validationSchema: yup.object().shape({
-    //    issue: yup.string().min('20', '20 character max')
-    // }),
-    
-    // handleSubmit(values, { setStatus }) {
-    //     console.log("values: ", values);
-    //     axiosWithAuth()  
-    //         .post(`/auth/register`, values)
-    //         .then(res => {
-    //             console.log("POST res", res.data);
-    //             console.log(values);
-                
-    //         })
-    //         .catch(err => console.log("ERROR API", err))
-    // }   
-})(UserHome)
+  mapPropsToValues({ title, category, details }) {
+    return {
+      title: title || "",
+      category: category || "other",
+      details: details || ""
+    };
+  },
+  validationSchema: yup.object().shape({
+    title: yup
+      .string()
+      .min("5", "Title must be five characters or more")
+      .required("You must provide a title."),
+    details: yup
+      .string()
+      .min("3", "Details must be three characters or more")
+      .required("You must provide details.")
+  }),
+
+  handleSubmit(values, { props }) {
+    //TODO change to submit new issue
+    console.log("values: ", values);
+    // axios
+    //   .post(`https://comake.herokuapp.com/api/issues`, values)
+    //   .then(res => {
+    //     console.log("POST res", res.data);
+    //     props.history.push("/userHome");
+    //     console.log(JSON.stringify(values));
+    //   })
+    //   .catch(err => alert(err.response.data.message));
+  }
+})(UserHome);
+
 export default FormikUserHome;
-//export default connect(
-    //     mapStateToProps,
-    //     { postData, getData }
-    //   )(Today);

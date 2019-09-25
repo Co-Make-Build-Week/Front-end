@@ -42,11 +42,11 @@ const IssuePage = (props) => {
         <
         h2 > { title } < /h2> <
         div className = "movie-director" >
-        Director: < em > { director } < /em> <
-        /div> <
+        Director: < em > { director } < /em> < /
+        div > <
         div className = "movie-metascore" >
-        Metascore: < strong > { metascore } < /strong> <
-        /div> <
+        Metascore: < strong > { metascore } < /strong> < /
+        div > <
         h3 > Actors < /h3>
 
         {
@@ -57,8 +57,8 @@ const IssuePage = (props) => {
             ))
         } <
         /div> <
-        div className = "save-button" > Save < /div> <
-        /div>
+        div className = "save-button" > Save < /div> < /
+        div >
     );
 }
 

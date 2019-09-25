@@ -5,11 +5,10 @@ import Registration from "./components/Registration.js";
 import UserHome from "./components/UserHome.js";
 import IssuesListPage from "./components/IssuesListPage.js";
 import NavBar from "./components/Navheader";
+import './App.scss';
 
 // IMPORT SUBMIT ISSUE FORM
 import SubmitIssueForm from "./components/submitIssueForm";
-
-import "./App.css";
 
 function App() {
   // NEW ISSUE STATE
