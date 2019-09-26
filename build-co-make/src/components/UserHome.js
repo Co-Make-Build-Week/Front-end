@@ -23,17 +23,23 @@ const UserHome = (props, { values, errors, touched, status }) => {
 const welcomeMesage = localStorage.getItem("message");
 const id = localStorage.getItem('userId');
 
-console.log(props);
+console.log("Re-rendering component, user id got from localStorage:", id);
 
     const [user, setUser] = useState(); //The user we get back from /api/users/:id
     const [issues, setIssues] = useState([]); //a list of all the user's issues
-
   useEffect(() => {
-         props.getUserIssues(id)
+         props.getUserIssues(id);
     }, []);
 
+    function callMe(){
+        console.log("Called");
+    }
 
 
+    useEffect(()=> {
+        console.log("props.userIssues useEffect");
+        setIssues(props.userIssues);
+    },[props.userIssues]);
 
     return ( 
     <StyledDiv>
@@ -46,11 +52,11 @@ console.log(props);
         </header>
 
         { /*NEW ISSUE FORM*/ } 
-        <SubmitIssueForm />
+        <SubmitIssueForm  flag={callMe}/>
 
         { /*USER'S ISSUE LIST*/ } {
             props.userIssues.map(item => {
-                return <IssueCard issue = { item }
+                return <IssueCard  flag={callMe} issue={ item }
                 showButtons = { true }
                 />;
             })
