@@ -6,9 +6,9 @@ import SubmitIssueForm from "../components/submitIssueForm.js";
 
 //import redux/fn
 import { deleteIssues } from '../actions/index';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-const StyledCard = styled.div `
+const StyledCard = styled.div`
   width: 60vw;
   margin: 0 auto;
   .card {
@@ -49,80 +49,70 @@ const StyledCard = styled.div `
 
 function IssueCard(props) {
 
-    console.log(props);
-    const [issue, setIssue] = useState();
-    const [form, setForm] = useState( < div > < /div>);function handleDelete() {
-                props.deleteIssues(props.issue.id);
-                // props.flagChange();
+  console.log(props);
+  const [issue, setIssue] = useState();
+  const [form, setForm] = useState(<div></div>);
+function handleDelete(){
+  props.deleteIssues(props.issue.id);
+  
+}
 
-            }
+  useEffect(() => {
+    setIssue(props.issue);
+  }, [props.issue]);
 
-            useEffect(() => {
-                setIssue(props.issue);
-            }, [props.issue]);
+  let issueButtons = <div></div>;
 
-            let issueButtons = < div > < /div>;
+  useEffect(() => {
+    console.log("Re-rendering");
+  }, [form]);
 
-            useEffect(() => {
-                console.log("Re-rendering");
-            }, [form]);
+  function showForm () {
+    console.log("On click");
+    setForm(<SubmitIssueForm issue={issue} flagChange={props.flagChange} />);
+  }
 
-            function showForm() {
-                console.log("On click");
-                setForm( < SubmitIssueForm issue = { issue }
-                    flagChange = { props.flagChange }
-                    />);
-                }
-
-                if (props.showButtons) {
-                    issueButtons = ( <
-                        div >
-                        <
-                        Link to = "/userHome" > < button onClick = { handleDelete } > Delete < /button></Link >
-                        <
-                        button onClick = { showForm } > Edit < /button> <
-                        Link to = "/userHome" > < button > Home < /button></Link >
-                        <
-                        /div>
-                    );
-                }
+  if (props.showButtons) {
+    issueButtons = (
+      <div>
+        <Link to="/userHome"><button onClick={handleDelete}>Delete</button></Link>
+        <button onClick={showForm}>Edit</button>
+        <Link to="/userHome"><button>Home</button></Link>
+      </div>
+    );
+  }
 
 
-                if (!issue) return <p > Loading... < /p>;
+  if (!issue) return <p>Loading...</p>;
 
-                return ( <
-                    StyledCard >
-                    <
-                    div className = "card" >
-                    <
-                    div className = "issueImage" >
-                    <
-                    img src = { issue.imageURL }
-                    className = "pic" / >
-                    <
-                    /div> <
-                    div className = "text" >
-                    <
-                    Link to = { `/issues/${issue.id}` } >
-                    <
-                    h2 > { issue.title } - { issue.category } <
-                    /h2> <
-                    p > { issue.details } < /p> <
-                    /Link>
+  return (
+    <StyledCard>
+        <div className="card">
+          <div className="issueImage">
+            <img src={issue.imageURL} className="pic" />
+          </div>
+          <div className="text">
+      <Link to={`/issues/${issue.id}`}>
+            <h2>
+              {issue.title} - {issue.category}
+            </h2>
+            <p>{issue.details}</p>
+      </Link>
 
-                    <
-                    p > By user { issue.user_id }(TODO: get username by id) < /p> <
-                    p > Upvotes: { issue.upvotes } < /p> { issueButtons } { form } <
-                    /div> <
-                    /div> <
-                    /StyledCard>
-                );
-            }
-            const mapStateToProps = (state) => {
-                return {
-                    state
-                }
+            <p>By user {issue.user_id} (TODO: get username by id)</p>
+            <p>Upvotes: {issue.upvotes}</p>
+            {issueButtons}
+            {form}
+          </div>
+        </div>
+    </StyledCard>
+  );
+}
+const mapStateToProps = (state)=>{
+  return{
+    state
+  }
 
-            }
+}
 
-            export default connect(mapStateToProps, { deleteIssues })(IssueCard);
+export default connect(mapStateToProps,{deleteIssues})(IssueCard);

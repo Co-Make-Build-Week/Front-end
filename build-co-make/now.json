@@ -1,8 +1,8 @@
 {
     "version": 2,
-    "name": "project-name",
-    "builds": [{ "src": "project-name/package.json", "use": "@now/static-build", "config": { "distDir": "build" } }],
+    "name": "build-co-make",
+    "builds": [{ "src": "build-co-make/package.json", "use": "@now/static-build", "config": { "distDir": "build" } }],
     "routes": [
-        { "src": "/(.*)", "dest": "project-name/$1" }
+        { "src": "/(.*)", "dest": "build-co-make/$1" }
     ]
 }
