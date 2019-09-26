@@ -4,9 +4,10 @@ import Login from "./components/Login.js";
 import Registration from "./components/Registration.js";
 import UserHome from "./components/UserHome.js";
 import IssuesListPage from "./components/IssuesListPage.js";
-import NavBar from "./components/Navheader";
+import NavBar from "./components/Navheader.js";
 import './App.scss';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute.js';
+import IssuePage from "./components/IssuePage.js";
 
 // IMPORT SUBMIT ISSUE FORM
 import SubmitIssueForm from "./components/SubmitIssueForm";
@@ -31,6 +32,7 @@ console.log("hello from app.js");
           
         <PrivateRoute path="/userHome" component={NavBar}/>
         <PrivateRoute path="/issuesListPage" component={NavBar}/>
+        <PrivateRoute path="/issues/:id" component={IssuePage}/>
 
         <PrivateRoute path="/userHome/" component={UserHome} />
         {/* <PrivateRoute path='/userHome/:id' component={UserHome}/> */}

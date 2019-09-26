@@ -16,7 +16,10 @@ import {
     UPDATE_ISSUES_FAILURE,
     UPDATE_VOTE_START,
     UPDATE_VOTE_SUCCESS,
-    UPDATE_VOTE_FAILURE
+    UPDATE_VOTE_FAILURE,
+    FETCH_ONEISSUE_START,
+    FETCH_ONEISSUE_SUCCESS,
+    FETCH_ONEISSUE_FAILURE
 
 } from '../actions/index.js';
 
@@ -25,6 +28,10 @@ const initialState = {
     userIssues: [],
     userInfo: [],
     isLoading: false,
+    creatingIssue: false,
+    createdIssue: false,
+    updatingIssue: false,
+    updatedIssue: false,
     error: '',
 
 }
@@ -32,88 +39,114 @@ const initialState = {
 export const issuesReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_ALLISSUES_START:
-            
-                return {
-                    ...state,
-                    isLoading: true,
-                    error: ''
-                };
-           
+
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            };
+
         case FETCH_ALLISSUES_SUCCESS:
-                console.log('this is the payload', action.payload)
-                return {
-                    ...state,
-                    issues:[ ...action.payload],
-                    isLoading: false,
-                    error: ''
-                };
+            console.log('this is the payload', action.payload)
+            return {
+                ...state,
+                issues: [...action.payload],
+                isLoading: false,
+                error: ''
+            };
         case FETCH_ALLISSUES_FAILURE:
-                return {
-                    ...state,
-                    isLoading: false,
-                    error: 'not loading like that'
-                };
+            return {
+                ...state,
+                isLoading: false,
+                error: 'not loading like that'
+            };
         case POST_ALLISSUES_START:
-                return {
-                    ...state,
-                    isLoading: true,
-                    error: ''
-                };
+            return {
+                ...state,
+                isLoading: true,
+                creatingIssue: true,
+                error: ''
+            };
         case POST_ALLISSUES_SUCCESS:
-                return {
-                    ...state,
-                    issues: [...state.issues, ...action.payload],
-                    isLoading: false,
-                    error: '',
-                };
+            return {
+                ...state,
+                issues: [...state.issues, ...action.payload],
+                isLoading: false,
+                creatingIssue: false,
+                createdIssue: true,
+                error: '',
+            };
         case POST_ALLISSUES_FAILURE:
-                return {
-                    ...state,
-                    isLoading: false,
-                    error: action.payload
-                }
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload
+            }
         case FETCH_USERISSUES_START:
-                return {
-                    ...state,
-                    isLoading: true,
-                    error: ''
-                }
+            return {
+                ...state,
+                isLoading: true,
+                creatingIssue: true,
+                error: ''
+            }
         case FETCH_USERISSUES_SUCCESS:
-                return {
-                    ...state,
-                    userIssues: [...action.payload],
-                    isLoading: false,
-                    error: ''
-                }
+            return {
+                ...state,
+                userIssues: [...action.payload],
+                isLoading: false,
+                creatingIssue: false,
+                createdIssue: true,
+                error: ''
+            }
         case FETCH_USERISSUES_FAILURE:
-                return {
-                    ...state,
-                    isLoading: false,
-                    error: action.payload
-                }
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload
+            }
         case UPDATE_ISSUES_START:
-                return {
-                    ...state,
-                    isLoading: true,
-                    error: ''
-                }
+            return {
+                ...state,
+                isLoading: true,
+                updatingIssue: true,
+                error: ''
+            }
         case UPDATE_ISSUES_SUCCESS:
-                return {
-                    ...state,
-                    issues: [...action.payload],
-                    isLoading: false,
-                    error: ''
-                }
+            return {
+                ...state,
+                issues: [...action.payload],
+                isLoading: false,
+                updatingIssue: false,
+                updatedIssue: true,
+                error: ''
+            }
         case UPDATE_ISSUES_FAILURE:
-                return {
-                    ...state,
-                    isLoading: false,
-                    error: action.payload
-                }
-    
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload
+            }
+        case FETCH_ONEISSUE_START:
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            }
+        case FETCH_ONEISSUE_SUCCESS:
+            return {
+                ...state,
+                issues: action.payload,
+                isLoading: false,
+                error: ''
+            }
+        case FETCH_ONEISSUE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload
+            }
         default:
             return state;
 
     }
 }
-

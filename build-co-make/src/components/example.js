@@ -35,8 +35,8 @@ function SignUpForm({ values, errors, touched, isSubmitting, status }) {
                             name = "tos"
                             checked = { values.tos }
                             /> I Agree to the Terms of Service <
-                            button disabled = { isSubmitting } > Submit < /button> <
-                            /Form> {
+                            button disabled = { isSubmitting } > Submit < /button> < /
+                            Form > {
                                 alreadySignedUp.map((item) => {
                                     return <UserDisplay user = { item }
                                     />

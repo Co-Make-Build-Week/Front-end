@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 // IMPORT STYLED COMPONENTS AND CSS MIXINS
 import styled from "styled-components";
+import SubmitIssueForm from "../components/SubmitIssueForm.js";
 
-const StyledCard = styled.div`
+//import redux/fn
+import { deleteIssues } from '../actions/index';
+import { connect } from 'react-redux';
+
+const StyledCard = styled.div `
   width: 60vw;
   margin: 0 auto;
   .card {
@@ -44,47 +48,81 @@ const StyledCard = styled.div`
 `;
 
 function IssueCard(props) {
-  console.log(props);
-  const [issue, setIssue] = useState();
 
-  useEffect(() => {
-    setIssue(props.issue);
-  }, [props.issue]);
+    console.log(props);
+    const [issue, setIssue] = useState();
+    const [form, setForm] = useState( < div > < /div>);function handleDelete() {
+                props.deleteIssues(props.issue.id);
+                // props.flagChange();
 
-  let issueButtons = <div></div>;
+            }
 
-  if (props.showButtons) {
-    issueButtons = (
-      <div>
-        <button>Delete</button>
-        <button>Edit</button>
-      </div>
-    );
-  }
+            useEffect(() => {
+                setIssue(props.issue);
+            }, [props.issue]);
 
-  if (!issue) return <p>Loading...</p>;
+            let issueButtons = < div > < /div>;
 
-  return (
-    <StyledCard>
-      <Link to={`/issues/${issue.id}`}>
-        <div className="card">
-          <div className="issueImage">
-            <img src={issue.imageURL} className="pic" />
-          </div>
-          <div className="text">
-            <h2>
-              {issue.title} - {issue.category}
-            </h2>
-            <p>{issue.details}</p>
+            useEffect(() => {
+                console.log("Re-rendering");
+            }, [form]);
 
-            <p>By user {issue.user_id} (TODO: get username by id)</p>
-            <p>Upvotes: {issue.upvotes}</p>
-            {issueButtons}
-          </div>
-        </div>
-      </Link>
-    </StyledCard>
-  );
-}
+            function showForm() {
+                console.log("On click");
+                setForm( < SubmitIssueForm issue = { issue }
+                    flagChange = { props.flagChange }
+                    />);
+                }
 
-export default IssueCard;
+                if (props.showButtons) {
+                    issueButtons = ( <
+                        div >
+                        <
+                        Link to = "/userHome" > < button onClick = { handleDelete } > Delete < /button></Link >
+                        <
+                        button onClick = { showForm } > Edit < /button> <
+                        Link to = "/userHome" > < button > Home < /button></Link >
+                        <
+                        /div>
+                    );
+                }
+
+
+                if (!issue) return <p > Loading... < /p>;
+
+                return ( <
+                    StyledCard >
+                    <
+                    div className = "card" >
+                    <
+                    div className = "issueImage" >
+                    <
+                    img src = { issue.imageURL }
+                    className = "pic" / >
+                    <
+                    /div> <
+                    div className = "text" >
+                    <
+                    Link to = { `/issues/${issue.id}` } >
+                    <
+                    h2 > { issue.title } - { issue.category } <
+                    /h2> <
+                    p > { issue.details } < /p> <
+                    /Link>
+
+                    <
+                    p > By user { issue.user_id }(TODO: get username by id) < /p> <
+                    p > Upvotes: { issue.upvotes } < /p> { issueButtons } { form } <
+                    /div> <
+                    /div> <
+                    /StyledCard>
+                );
+            }
+            const mapStateToProps = (state) => {
+                return {
+                    state
+                }
+
+            }
+
+            export default connect(mapStateToProps, { deleteIssues })(IssueCard);
