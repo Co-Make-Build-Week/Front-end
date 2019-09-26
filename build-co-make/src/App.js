@@ -10,7 +10,7 @@ import PrivateRoute from './components/PrivateRoute.js';
 import IssuePage from "./components/IssuePage.js";
 
 // IMPORT SUBMIT ISSUE FORM
-import SubmitIssueForm from "./components/SubmitIssueForm";
+import SubmitIssueForm from "./components/submitIssueForm.js";
 
 function App() {
 
