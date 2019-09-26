@@ -32,6 +32,7 @@ console.log("hello from app.js");
           
         <PrivateRoute path="/userHome" component={NavBar}/>
         <PrivateRoute path="/issuesListPage" component={NavBar}/>
+        <PrivateRoute path="/issues/:id" component={NavBar}/>
         <PrivateRoute path="/issues/:id" component={IssuePage}/>
 
         <PrivateRoute path="/userHome/" component={UserHome} />
