@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // IMPORT STYLED COMPONENTS AND CSS MIXINS
 import styled from "styled-components";
-import SubmitIssueForm from "../components/SubmitIssueForm.js";
+import SubmitIssueForm from "../components/submitIssueForm.js";
 
 //import redux/fn
 import { deleteIssues } from '../actions/index';

@@ -10,7 +10,7 @@ import PrivateRoute from './components/PrivateRoute.js';
 import IssuePage from "./components/IssuePage.js";
 
 // IMPORT SUBMIT ISSUE FORM
-import SubmitIssueForm from "./components/SubmitIssueForm";
+import SubmitIssueForm from "./components/submitIssueForm.js";
 
 function App() {
 
@@ -32,6 +32,7 @@ console.log("hello from app.js");
           
         <PrivateRoute path="/userHome" component={NavBar}/>
         <PrivateRoute path="/issuesListPage" component={NavBar}/>
+        <PrivateRoute path="/issues/:id" component={NavBar}/>
         <PrivateRoute path="/issues/:id" component={IssuePage}/>
 
         <PrivateRoute path="/userHome/" component={UserHome} />
