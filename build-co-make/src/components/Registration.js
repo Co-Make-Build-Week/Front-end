@@ -31,7 +31,7 @@ const UserForm = ({ values, errors, touched, status }) => {
             <
             h1 > Sign up here! < /h1>{" "} <
             Link to = "/" > { " " }
-            Already registered ? < button > Sign in her! < /button> <
+            Already registered ? < button > Sign in here! < /button>{" "} <
             /Link> <
             StyledDiv className = "form" >
             <
@@ -41,54 +41,58 @@ const UserForm = ({ values, errors, touched, status }) => {
             <
             label >
             <
-            span > Email < /span> <br / > { " " } {
-                touched.email && errors.email && < p > { errors.email } < /p>}{" "} { /*This is the validation*/ } { " " } <
-                    Field type = "text"
+            span > Email < /span> <
+            br / > {
+                touched.email && errors.email && < p > { errors.email } < /p>} <
+                Field type = "text"
                 name = "username"
                 placeholder = "username" / >
-                    <
-                    /label>{" "} <
-                    /div>{" "} <
-                    br / >
-                    <
-                    div className = "input-field" >
-                    <
-                    label >
-                    <
-                    span > Password < /span> <br / > { " " } {
-                        touched.password && errors.password && ( <
-                            p > { errors.password } < /p>
-                        )
-                    } { " " } <
-                    Field type = "password"
+                <
+                /label> <
+                /div>
+
+                <
+                br / >
+                <
+                div className = "input-field" >
+                <
+                label >
+                <
+                span > Password < /span> <
+                br / > {
+                    touched.password && errors.password && ( <
+                        p > { errors.password } < /p>
+                    )
+                } <
+                Field type = "password"
                 name = "password"
                 placeholder = "password" / >
-                    <
-                    /label>{" "} <
-                    /div>{" "} <
-                    hr / >
-                    <
-                    label className = "tos" >
-                    <
-                    span >
-                    TOS - I agree that I will not use this as a tool to cause undue
-                stress to others. { " " } <
-                    /span>{" "} <
-                    Field className = "tos"
+                <
+                /label> <
+                /div> <
+                hr / >
+                <
+                label className = "tos" >
+                <
+                span >
+                TOS - I agree that I will not use this as a tool to cause undue
+                stress to others. <
+                /span> <
+                Field className = "tos"
                 component = "select"
                 name = "agreement" >
-                    <
-                    option value = "I agree to your TOS" > Agree < /option>{" "} <
-                    option value = "I do not agree with your TOS" > Disagree < /option>{" "} <
-                    /Field>{" "} <
-                    /label>{" "} <
-                    div className = "button" >
-                    <
-                    button type = "submit" > Join us! < /button>{" "} <
-                    /div>{" "} <
-                    /Form>{" "} <
-                    /StyledDiv>{" "} <
-                    /StyledContainer>
+                <
+                option value = "I agree to your TOS" > Agree < /option> <
+                option value = "I do not agree with your TOS" > Disagree < /option> <
+                /Field> <
+                /label> <
+                div className = "button" >
+                <
+                button type = "submit" > Join us! < /button> <
+                /div> <
+                /Form> <
+                /StyledDiv> <
+                /StyledContainer>
             );
         };
 
@@ -111,15 +115,15 @@ const UserForm = ({ values, errors, touched, status }) => {
             }),
 
             handleSubmit(values, { props }) {
-                console.log("values: ", values);
+                //console.log("values: ", values);
                 axios
                     .post(`https://comake.herokuapp.com/api/auth/register`, values)
                     .then(res => {
-                        console.log("POST res", res.data);
+                        //console.log("POST res", res.data);
                         props.history.push("/userHome");
                         localStorage.setItem("userId", res.data.id);
                         localStorage.setItem("token", res.data.token);
-                        console.log(JSON.stringify(values));
+                        //console.log(JSON.stringify(values));
                     })
                     .catch(err => alert(err.response.data.message));
             }

@@ -82,12 +82,12 @@ function SignUpForm({ values, errors, touched, isSubmitting, status }) {
                                 .post("https://reqres.in/api/users", values)
                                 .then(res => {
                                     setStatus(values);
-                                    console.log(res);
+                                    //console.log(res);
                                     resetForm();
                                     setSubmitting(false);
                                 })
                                 .catch(err => {
-                                    console.log(err);
+                                    //console.log(err);
                                     setSubmitting(false);
                                 });
                         }

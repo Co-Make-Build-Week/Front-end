@@ -6,19 +6,19 @@ import styled, { css } from "styled-components";
 
 // VARIABLES
 
-const fontSizeForm = css`
+const fontSizeForm = css `
     1.75rem;
 `;
 
-const buttonColor = css`
-    #52d5ac;
+const buttonColor = css `
+    background: #52d5ac;
 `;
 
 // MIXINS
 
 // FORM WRAPPED MIXIN
 
-export const wrappedMixin = css`
+export const wrappedMixin = css `
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,7 +31,7 @@ export const wrappedMixin = css`
 
 // FORM MIXIN
 
-export const formMixin = css`
+export const formMixin = css `
   display: flex;
   flex-direction: column;
   align-items: flex-start;

@@ -2,9 +2,6 @@ import {
     FETCH_ALLISSUES_START,
     FETCH_ALLISSUES_SUCCESS,
     FETCH_ALLISSUES_FAILURE,
-    FETCH_USER_START,
-    FETCH_USER_SUCCESS,
-    FETCH_USER_FAILURE,
     FETCH_USERISSUES_START,
     FETCH_USERISSUES_SUCCESS,
     FETCH_USERISSUES_FAILURE,
@@ -14,12 +11,15 @@ import {
     UPDATE_ISSUES_START,
     UPDATE_ISSUES_SUCCESS,
     UPDATE_ISSUES_FAILURE,
-    UPDATE_VOTE_START,
-    UPDATE_VOTE_SUCCESS,
-    UPDATE_VOTE_FAILURE,
     FETCH_ONEISSUE_START,
     FETCH_ONEISSUE_SUCCESS,
-    FETCH_ONEISSUE_FAILURE
+    FETCH_ONEISSUE_FAILURE,
+    PUT_UPVOTE_START,
+    PUT_UPVOTE_SUCCESS,
+    PUT_UPVOTE_FAILURE,
+    PUT_DOWNVOTE_START,
+    PUT_DOWNVOTE_SUCCESS,
+    PUT_DOWNVOTE_FAILURE
 
 } from '../actions/index.js';
 
@@ -32,6 +32,8 @@ const initialState = {
     createdIssue: false,
     updatingIssue: false,
     updatedIssue: false,
+    updatingVote: false,
+    udatedVote: false,
     error: '',
 
 }
@@ -47,7 +49,7 @@ export const issuesReducer = (state = initialState, action) => {
             };
 
         case FETCH_ALLISSUES_SUCCESS:
-            console.log('this is the payload', action.payload)
+            //console.log('this is the payload', action.payload)
             return {
                 ...state,
                 issues: [...action.payload],
@@ -145,6 +147,47 @@ export const issuesReducer = (state = initialState, action) => {
                 isLoading: false,
                 error: action.payload
             }
+        case PUT_UPVOTE_START:
+            return {
+                ...state,
+                isLoading: true,
+                updatingVote: true,
+                error: ''
+            }
+        case PUT_UPVOTE_SUCCESS:
+            return {
+                ...state,
+                issues: [...action.payload],
+                updatingVote: false,
+                updatedVote: true,
+                error: ''
+            }
+        case PUT_UPVOTE_FAILURE:
+            return {
+                ...state,
+                error: action.payload
+            }
+        case PUT_DOWNVOTE_START:
+            return {
+                ...state,
+                isLoading: true,
+                updatingVote: true,
+                error: ''
+            }
+        case PUT_DOWNVOTE_SUCCESS:
+            return {
+                ...state,
+                issues: [...action.payload],
+                updatingVote: false,
+                updatedVote: true,
+                error: ''
+            }
+        case PUT_DOWNVOTE_FAILURE:
+            return {
+                ...state,
+                error: action.payload
+            }
+
         default:
             return state;
 

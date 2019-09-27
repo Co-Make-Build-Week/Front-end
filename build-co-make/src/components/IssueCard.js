@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // IMPORT STYLED COMPONENTS AND CSS MIXINS
 import styled from "styled-components";
-import SubmitIssueForm from "../components/submitIssueForm.js";
+import IssueForm from "./IssueForm.js";
 
 //import redux/fn
-import { deleteIssues } from '../actions/index';
+import { deleteIssues, upVote, downVote, getAllIssues, getUserIssues } from '../actions/index';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 const StyledCard = styled.div`
   width: 60vw;
@@ -50,33 +51,67 @@ const StyledCard = styled.div`
 function IssueCard(props) {
 
   console.log(props);
+  
   const [issue, setIssue] = useState();
   const [form, setForm] = useState(<div></div>);
-function handleDelete(){
-  props.deleteIssues(props.issue.id);
-  
-}
 
+const uId = localStorage.getItem('userId');
+
+function handleDelete(){
+ props.deleteIssues(props.issue.id);
+}
+console.log("ISSUE STRUCTURE", issue);
   useEffect(() => {
     setIssue(props.issue);
-  }, [props.issue]);
+    props.getUserIssues(uId);
+    // props.setBackup(!props.backup);
+  }, [issue]);
 
   let issueButtons = <div></div>;
 
   useEffect(() => {
-    console.log("Re-rendering");
+    //console.log("Re-rendering");
   }, [form]);
 
   function showForm () {
-    console.log("On click");
-    setForm(<SubmitIssueForm issue={issue} flagChange={props.flagChange} />);
+    //console.log("On click");
+    setForm(<IssueForm issue={issue} flagChange={props.flagChange} />);
   }
+
+function upVoteNow (){
+  // const theId = props.match
+  props.upVote(issue);
+  props.getUserIssues(uId);
+  // props.setBackup(!props.backup);
+  alert('you voted for this issue');
+  // window.location.reload();
+  props.history.push('/userHome');
+    console.log(issue);
+
+}
+
+function downVoteNow (){
+  props.downVote(issue);
+  props.getUserIssues(uId);
+  // props.setBackup(!props.backup);
+  alert('you removed your vote for this issue');
+  // window.location.reload();
+  props.history.push('/userHome');
+  console.log(issue);
+
+}
+
+useEffect(() => {
+  // props.getUserIssues(uId);
+  // props.getAllIssues();
+
+},[])
 
   if (props.showButtons) {
     issueButtons = (
       <div>
         <Link to="/userHome"><button onClick={handleDelete}>Delete</button></Link>
-        <button onClick={showForm}>Edit</button>
+          <button onClick={showForm}>Edit</button>
         <Link to="/userHome"><button>Home</button></Link>
       </div>
     );
@@ -89,18 +124,20 @@ function handleDelete(){
     <StyledCard>
         <div className="card">
           <div className="issueImage">
-            <img src={issue.imageURL} className="pic" />
+            <img src={issue.imageURL} className="pic" alt="specific issue" />
           </div>
           <div className="text">
-      <Link to={`/issues/${issue.id}`}>
+      <Link to={`/issues/${issue.id}`} className="detail-link"><span><em>Click here to edit or delete your issue!</em></span>
             <h2>
               {issue.title} - {issue.category}
             </h2>
             <p>{issue.details}</p>
       </Link>
 
-            <p>By user {issue.user_id} (TODO: get username by id)</p>
-            <p>Upvotes: {issue.upvotes}</p>
+            <p>By user {issue.user_id} (TODO: Get username by ID)</p>
+            <button onClick={upVoteNow}>Upvote: {issue.upvotes}</button>
+            <button onClick={downVoteNow}>remove my vote</button>
+
             {issueButtons}
             {form}
           </div>
@@ -115,4 +152,4 @@ const mapStateToProps = (state)=>{
 
 }
 
-export default connect(mapStateToProps,{deleteIssues})(IssueCard);
+export default withRouter(connect(mapStateToProps,{deleteIssues,upVote, downVote, getAllIssues, getUserIssues})(IssueCard));
