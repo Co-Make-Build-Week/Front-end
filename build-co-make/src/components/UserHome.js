@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { withFormik, Form, Field } from "formik";
 import * as yup from "yup";
 import { axiosWithAuth } from "../axiosWithAuth/axiosWithAuth.js";
 import IssueCard from "../components/IssueCard.js";
-import SubmitIssueForm from "./submitIssueForm.js";
+import SubmitIssueForm from "./SubmitIssueForm.js";
 
 // IMPORT STYLED COMPONENTS AND MIXINS
 import styled from "styled-components";
@@ -19,11 +18,12 @@ const StyledDiv = styled.div `
 `;
 
 
+
 const UserHome = (props, { values, errors, touched, status }) => {
-const welcomeMesage = localStorage.getItem("message");
+const welcomeMessage = localStorage.getItem("message");
 const id = localStorage.getItem('userId');
 
-console.log("Re-rendering component, user id got from localStorage:", id);
+//console.log("Re-rendering component, user id got from localStorage:", id);
 
     const [user, setUser] = useState(); //The user we get back from /api/users/:id
     const [issues, setIssues] = useState([]); //a list of all the user's issues
@@ -32,12 +32,12 @@ console.log("Re-rendering component, user id got from localStorage:", id);
     }, []);
 
     function callMe(){
-        console.log("Called");
+        //console.log("Called");
     }
 
 
     useEffect(()=> {
-        console.log("props.userIssues useEffect");
+        //console.log("props.userIssues useEffect");
         setIssues(props.userIssues);
     },[props.userIssues]);
 
@@ -45,10 +45,9 @@ console.log("Re-rendering component, user id got from localStorage:", id);
     <StyledDiv>
         <header>
         <h1> 
-          {!props.userIssues.length ? "No Current Submitted Issues At This Time......Make One" : welcomeMesage}
+          {!props.userIssues.length ? "No Current Submitted Issues At This Time......Make One" : welcomeMessage}
        </h1> 
        <h3>Current Issues: {props.userIssues.length}</h3>
-        <Link to = "/issuesListPage" > All Local Issues </Link> 
         </header>
 
         { /*NEW ISSUE FORM*/ } 
@@ -57,7 +56,7 @@ console.log("Re-rendering component, user id got from localStorage:", id);
         { /*USER'S ISSUE LIST*/ } {
             props.userIssues.map(item => {
                 return <IssueCard  flag={callMe} issue={ item }
-                showButtons = { true }
+                showButtons = { false }
                 />;
             })
         } 
@@ -66,7 +65,7 @@ console.log("Re-rendering component, user id got from localStorage:", id);
 };
 
 const mapStateToProps = (state) => {
-    console.log('make me sick', state);
+    //console.log('make me sick', state);
     const {userIssues}= state;
     return {
         userIssues

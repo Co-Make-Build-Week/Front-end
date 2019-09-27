@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // IMPORT STYLED COMPONENTS AND CSS MIXINS
 import styled from "styled-components";
-import SubmitIssueForm from "../components/submitIssueForm.js";
+import SubmitIssueForm from "../components/SubmitIssueForm.js";
 
 //import redux/fn
-import { deleteIssues } from '../actions/index';
+import { deleteIssues, upVote, downVote } from '../actions/index';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 const StyledCard = styled.div`
   width: 60vw;
@@ -50,13 +51,14 @@ const StyledCard = styled.div`
 function IssueCard(props) {
 
   console.log(props);
+  
   const [issue, setIssue] = useState();
   const [form, setForm] = useState(<div></div>);
 function handleDelete(){
-  props.deleteIssues(props.issue.id);
-  
-}
+ props.deleteIssues(props.issue.id);
 
+}
+console.log("ISSUE STRUCTURE", issue);
   useEffect(() => {
     setIssue(props.issue);
   }, [props.issue]);
@@ -64,19 +66,42 @@ function handleDelete(){
   let issueButtons = <div></div>;
 
   useEffect(() => {
-    console.log("Re-rendering");
+    //console.log("Re-rendering");
   }, [form]);
 
   function showForm () {
-    console.log("On click");
+    //console.log("On click");
     setForm(<SubmitIssueForm issue={issue} flagChange={props.flagChange} />);
   }
+
+function upVoteNow (){
+  // const theId = props.match
+  console.log(issue);
+  props.upVote(issue);
+  alert('you voted for this issue');
+  window.location.reload();
+  props.history.push('/userHome');
+}
+
+function downVoteNow (){
+  console.log(issue);
+  props.downVote(issue);
+  alert('you removed your vote for this issue');
+  window.location.reload();
+  props.history.push('/userHome');
+
+}
+
+useEffect(() => {
+  
+
+},[])
 
   if (props.showButtons) {
     issueButtons = (
       <div>
         <Link to="/userHome"><button onClick={handleDelete}>Delete</button></Link>
-        <button onClick={showForm}>Edit</button>
+          <button onClick={showForm}>Edit</button>
         <Link to="/userHome"><button>Home</button></Link>
       </div>
     );
@@ -89,18 +114,20 @@ function handleDelete(){
     <StyledCard>
         <div className="card">
           <div className="issueImage">
-            <img src={issue.imageURL} className="pic" />
+            <img src={issue.imageURL} className="pic" alt="specific issue" />
           </div>
           <div className="text">
-      <Link to={`/issues/${issue.id}`}>
+      <Link to={`/issues/${issue.id}`} className="detail-link"><span><em>Click here to edit or delete your issue!</em></span>
             <h2>
               {issue.title} - {issue.category}
             </h2>
             <p>{issue.details}</p>
       </Link>
 
-            <p>By user {issue.user_id} (TODO: get username by id)</p>
-            <p>Upvotes: {issue.upvotes}</p>
+            <p>By user {issue.user_id} (TODO: Get username by ID)</p>
+            <button onClick={upVoteNow}>Upvote: {issue.upvotes}</button>
+            <button onClick={downVoteNow}>remove my vote</button>
+
             {issueButtons}
             {form}
           </div>
@@ -115,4 +142,4 @@ const mapStateToProps = (state)=>{
 
 }
 
-export default connect(mapStateToProps,{deleteIssues})(IssueCard);
+export default withRouter(connect(mapStateToProps,{deleteIssues,upVote, downVote})(IssueCard));

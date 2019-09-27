@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
-import {getAllIssues} from '../actions/index.js';
+import { connect } from 'react-redux';
+import { getAllIssues, upVote, downVote } from '../actions/index.js';
 
 import IssueCard from './IssueCard.js';
 
@@ -12,41 +12,41 @@ import styled from 'styled-components';
 //then goes to profile page and card view of individual {id} issue.
 
 const IssuesListPage = (props) => {
-console.log(props);
+    // console.log(props);
 
 
     useEffect(() => {
         props.getAllIssues();
 
-    },[])
+    }, [])
 
-    if(!props.issues.length){
-        return <div>Loading......</div>;
+    if (!props.issues.length) {
+        return <div > Loading...... </div>;
     };
 
-    return (
-        <div>
-             <header>
-                <h1>Welcome to the issues page</h1>
-                {/* <Link to=></Link> */}
-            </header>
-            <hr />
-            <h2>Issues in your Area</h2>
-            {props.issues.map((item) => {
-                console.log("creating issue card for issue", item);
-                return <IssueCard issue={item} showButtons={false} />
-                //if we wanted could do something like showButtons={item.user_id === currentlyLoggedInUser.id} to
-                //show buttons on issues page only if the user currently logged in owns it but idk how to get currentlyLoggedInUser.id
-            })} 
+    return ( <div>
+        <header >
+        <h1> Welcome to the issues page </h1> 
+        </header> 
+        <hr/>
+        <h2> Issues in your Area:  {props.issues.length}</h2> {
+            props.issues.map((item) => {
+                return <IssueCard issue = { item }
+                showButtons = { false }
+                upVote={props.upVote}
+                downVote={props.downVote}
+                />
+            })
+        } 
         </div>
     );
 }
 const mapStateToProps = (state) => {
-    console.log('state is king', state);
-    const {issues} = state
+    //console.log('state is king', state);
+    const { issues } = state
     return {
-    issues       
+        issues
     }
 }
 
-export default connect(mapStateToProps, {getAllIssues})(IssuesListPage);
+export default connect(mapStateToProps, { getAllIssues, upVote, downVote })(IssuesListPage);

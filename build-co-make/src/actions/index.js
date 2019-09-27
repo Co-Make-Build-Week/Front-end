@@ -1,7 +1,39 @@
 import { axiosWithAuth } from '../axiosWithAuth/axiosWithAuth';
 
-//the fetch or initial get information ALL ISSUES
+export const PUT_DOWNVOTE_START = 'PUT_DOWNVOTE_START';
+export const PUT_DOWNVOTE_SUCCESS = 'PUT_DOWNVOTE_SUCCESS';
+export const PUT_DOWNVOTE_FAILURE = 'PUT_DOWNVOTE_FAILURE';
 
+export const downVote = (issue) => dispatch => {
+    dispatch({type:PUT_DOWNVOTE_START});
+    axiosWithAuth()
+    .put(`/issues/${issue.id}/downvote`, issue)
+    .then(res => {
+        dispatch({type: PUT_DOWNVOTE_SUCCESS, payload: res.data})
+    })
+    .catch(err => {
+        dispatch({type:PUT_DOWNVOTE_FAILURE, payload: err.response});
+    });
+};
+
+export const PUT_UPVOTE_START = 'PUT_UPVOTE_START';
+export const PUT_UPVOTE_SUCCESS = 'PUT_UPVOTE_SUCCESS';
+export const PUT_UPVOTE_FAILURE = 'PUT_UPVOTE_FAILURE';
+
+export const upVote = (issue) => dispatch => {
+ dispatch({type: PUT_UPVOTE_START});
+ axiosWithAuth()
+ .put(`/issues/${issue.id}/upvote`, issue)
+ .then(res => {
+     dispatch({type: PUT_UPVOTE_SUCCESS, payload: res.data})
+     console.log(res.data);
+ })
+ .catch(err => {
+     dispatch({type: PUT_UPVOTE_FAILURE, payload: err.response});
+ });
+};
+
+//the fetch or initial get information ALL ISSUES
 export const FETCH_ALLISSUES_START = 'FETCH_ISSUES_START';
 export const FETCH_ALLISSUES_SUCCESS = 'FETCH_ISSUES_SUCCESS';
 export const FETCH_ALLISSUES_FAILURE = 'FETCH_ISSUES_FAILURE';
@@ -26,12 +58,12 @@ export const FETCH_USERISSUES_SUCCESS = 'FETCH_USERISSUES_SUCCESS';
 export const FETCH_USERISSUES_FAILURE = 'FETCH_USERISSUES_FAILURE';
 
 export const getUserIssues = (userId) => dispatch => {
-    console.log("getUserIssues is ATLEAST getting called");
+    // console.log("getUserIssues is ATLEAST getting called");
     dispatch({ type: FETCH_USERISSUES_START });
     axiosWithAuth()
         .get(`/auth/users/${userId}/issues`)
         .then(res => {
-            console.log('hello from actions');
+            // console.log('hello from actions');
             dispatch({ type: FETCH_USERISSUES_SUCCESS, payload: res.data })
 
         })
@@ -39,7 +71,7 @@ export const getUserIssues = (userId) => dispatch => {
             dispatch({ type: FETCH_USERISSUES_FAILURE, payload: err.response });
         })
         .finally(() => {
-            console.log("getUserIssues is ATLEAST happening");
+            //console.log("getUserIssues is ATLEAST happening");
         });
 };
 
@@ -50,19 +82,20 @@ export const POST_ALLISSUES_SUCCESS = 'POST_ISSUES_SUCCESS';
 export const POST_ALLISSUES_FAILURE = 'POST_ISUES_FAILURE';
 //, userId
 export const addIssue = (issues) => dispatch => {
-    console.log("addIssue")
+    console.log("addIssue is runing", issues);
     dispatch({ type: POST_ALLISSUES_START });
     axiosWithAuth()
         .post('/issues', issues)
         .then(res => {
-            console.log("Working", res.data)
+            console.log("Working from actions for the addIssue", res.data)
             dispatch({ type: POST_ALLISSUES_SUCCESS, payload: res.data });
-            // getUserIssues(userId);
+            // console.log("RELOADING PAGE");
+            // window.location.reload();
         })
         .catch(err => {
             console.log("erroring", err)
             dispatch({ type: POST_ALLISSUES_FAILURE, payload: err.response });
-        });
+        })
 };
 
 
@@ -71,60 +104,66 @@ export const UPDATE_ISSUES_START = 'UPDATE_ISSUES_START';
 export const UPDATE_ISSUES_SUCCESS = 'UPDATE_ISSUES_SUCCESS';
 export const UPDATE_ISSUES_FAILURE = 'UPDATE_ISSUES_FAILURE';
 
-export const updateIssue = (issue, userId) => dispatch => {
+export const updateIssue = (issue, issueID) => dispatch => {
+    console.log("UPDATE ISSUE FUNCTION", issue, issueID);//This logs
     dispatch({ type: UPDATE_ISSUES_START });
+    console.log("UPDATE ISSUE FUNCTION AFTER DISPATCH");//This logs
     axiosWithAuth()
-        .put(`/issues/${issue.id}`, issue)
+        .put(`/issues/${issueID}`, issue)
         .then(res => {
+            alert("Sucessfully Updated Issue", res.data);//doesn't alert
             dispatch({ type: UPDATE_ISSUES_SUCCESS, payload: res.data })
-            // getUserIssues(userId);
             getAllIssues();
-
+        })
+        .then((res) => {
+            console.log("RELOADING PAGE");
+            window.location.reload();
         })
         .catch(err => {
+            console.error("ERROR UPDATING ISSUE", err);
             dispatch({ type: UPDATE_ISSUES_FAILURE, payload: err.response });
-        });
-};
-
-//to vote then .put the vote value
-export const UPDATE_VOTE_START = 'UPDATE_VOTE_START';
-export const UPDATE_VOTE_SUCCESS = 'UPDATE_VOTE_SUCCESS';
-export const UPDATE_VOTE_FAILURE = 'UPDATE_VOTE_FAILURE';
-
-export const theVote = (issueId, userId) => dispatch => {
-    dispatch({ type: UPDATE_VOTE_START });
-    axiosWithAuth()
-        .put(`/issues/${issueId}/vote`)
-        .then(res => {
-            console.log()
-            dispatch({ type: UPDATE_VOTE_SUCCESS, payload: res.data })
-            // getUserIssues(userId);
-            getAllIssues();
         })
-        .catch(err => {
-            dispatch({ type: UPDATE_VOTE_FAILURE, payload: err.response });
-        });
 };
 
-export const FETCH_ONEISSUE_START = 'FETCH_ONEISSUE_START' ;
+// //to vote then .put the vote value
+// export const UPDATE_VOTE_START = 'UPDATE_VOTE_START';
+// export const UPDATE_VOTE_SUCCESS = 'UPDATE_VOTE_SUCCESS';
+// export const UPDATE_VOTE_FAILURE = 'UPDATE_VOTE_FAILURE';
+
+// export const theVote = (issueId, userId) => dispatch => {
+//     dispatch({ type: UPDATE_VOTE_START });
+//     axiosWithAuth()
+//         .put(`/issues/${issueId}/vote`)
+//         .then(res => {
+//             // console.log()
+//             dispatch({ type: UPDATE_VOTE_SUCCESS, payload: res.data })
+//                 // getUserIssues(userId);
+//             getAllIssues();
+//         })
+//         .catch(err => {
+//             dispatch({ type: UPDATE_VOTE_FAILURE, payload: err.response });
+//         });
+// };
+
+export const FETCH_ONEISSUE_START = 'FETCH_ONEISSUE_START';
 export const FETCH_ONEISSUE_SUCCESS = 'FETCH_ONEISSUE_SUCCESS';
 export const FETCH_ONEISSUE_FAILURE = 'FETCH_ONEISSUE_FAILURE';
 
 export const grabOneIssue = (issueId) => dispatch => {
-    dispatch({type: FETCH_ONEISSUE_START});
+    dispatch({ type: FETCH_ONEISSUE_START });
     axiosWithAuth()
-    .get(`/issues/${issueId}`)
-    .then(res => {
-        console.log("grabOneIssue successful", res.data);
-        dispatch({type: FETCH_ONEISSUE_SUCCESS, payload: res.data})
-    })
-    .catch(err => {
-        console.log("grabOneIssue failed", err.response);
-        dispatch({type: FETCH_ONEISSUE_FAILURE, payload: err.response});
-    })
-    .finally(() => {
-        console.log("grabOneIssue is happening at least");
-    });
+        .get(`/issues/${issueId}`)
+        .then(res => {
+            //console.log("grabOneIssue successful", res.data);
+            dispatch({ type: FETCH_ONEISSUE_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            //console.log("grabOneIssue failed", err.response);
+            dispatch({ type: FETCH_ONEISSUE_FAILURE, payload: err.response });
+        })
+        .finally(() => {
+            //console.log("grabOneIssue is happening at least");
+        });
 }
 
 export const deleteIssues = (issueId) => dispatch => {
@@ -132,10 +171,12 @@ export const deleteIssues = (issueId) => dispatch => {
         .delete(`/issues/${issueId}`)
         .then(res => {
             getUserIssues(localStorage.getItem('userId'));
-            console.log('deleted issue', res);
+            //console.log('deleted issue', res);
 
         })
         .catch(err => {
             alert('error', err.response);
         });
 };
+
+

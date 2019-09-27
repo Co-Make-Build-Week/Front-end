@@ -10,7 +10,7 @@ import PrivateRoute from './components/PrivateRoute.js';
 import IssuePage from "./components/IssuePage.js";
 
 // IMPORT SUBMIT ISSUE FORM
-import SubmitIssueForm from "./components/submitIssueForm.js";
+import SubmitIssueForm from "./components/SubmitIssueForm.js";
 
 function App() {
 
@@ -24,7 +24,7 @@ function App() {
   const onSubmitIssue = formValues => {
     setNewIssue(formValues);
   };
-console.log("hello from app.js");
+  //console.log("hello from app.js");
   return (
     <div className="App">
         <Route exact path="/" component={Login} />
@@ -36,7 +36,6 @@ console.log("hello from app.js");
         <PrivateRoute path="/issues/:id" component={IssuePage}/>
 
         <PrivateRoute path="/userHome/" component={UserHome} />
-        {/* <PrivateRoute path='/userHome/:id' component={UserHome}/> */}
         <PrivateRoute path="/issuesListPage" component={IssuesListPage} />
 
         {/* ROUTE FOR PAGE WITH FORM TO SUBMIT ISSUE */}
