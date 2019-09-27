@@ -5,7 +5,7 @@ import styled from "styled-components";
 import SubmitIssueForm from "../components/SubmitIssueForm.js";
 
 //import redux/fn
-import { deleteIssues, upVote, downVote } from '../actions/index';
+import { deleteIssues, upVote, downVote, getAllIssues, getUserIssues } from '../actions/index';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
@@ -54,14 +54,18 @@ function IssueCard(props) {
   
   const [issue, setIssue] = useState();
   const [form, setForm] = useState(<div></div>);
+
+const uId = localStorage.getItem('userId');
+
 function handleDelete(){
  props.deleteIssues(props.issue.id);
-
 }
 console.log("ISSUE STRUCTURE", issue);
   useEffect(() => {
     setIssue(props.issue);
-  }, [props.issue]);
+    props.getUserIssues(uId);
+    // props.setBackup(!props.backup);
+  }, [issue]);
 
   let issueButtons = <div></div>;
 
@@ -76,24 +80,30 @@ console.log("ISSUE STRUCTURE", issue);
 
 function upVoteNow (){
   // const theId = props.match
-  console.log(issue);
   props.upVote(issue);
+  props.getUserIssues(uId);
+  // props.setBackup(!props.backup);
   alert('you voted for this issue');
-  window.location.reload();
+  // window.location.reload();
   props.history.push('/userHome');
+    console.log(issue);
+
 }
 
 function downVoteNow (){
-  console.log(issue);
   props.downVote(issue);
+  props.getUserIssues(uId);
+  // props.setBackup(!props.backup);
   alert('you removed your vote for this issue');
-  window.location.reload();
+  // window.location.reload();
   props.history.push('/userHome');
+  console.log(issue);
 
 }
 
 useEffect(() => {
-  
+  // props.getUserIssues(uId);
+  // props.getAllIssues();
 
 },[])
 
@@ -142,4 +152,4 @@ const mapStateToProps = (state)=>{
 
 }
 
-export default withRouter(connect(mapStateToProps,{deleteIssues,upVote, downVote})(IssueCard));
+export default withRouter(connect(mapStateToProps,{deleteIssues,upVote, downVote, getAllIssues, getUserIssues})(IssueCard));

@@ -12,6 +12,7 @@ import { wrappedMixin } from "./mixins";
 //redux imports
 import { connect } from 'react-redux';
 import { getUserIssues } from '../actions/index.js';
+import { fileURLToPath } from "url";
 
 const StyledDiv = styled.div `
   ${wrappedMixin};
@@ -27,8 +28,10 @@ const id = localStorage.getItem('userId');
 
     const [user, setUser] = useState(); //The user we get back from /api/users/:id
     const [issues, setIssues] = useState([]); //a list of all the user's issues
+    const [backup, setBackup] = useState(false);
   useEffect(() => {
          props.getUserIssues(id);
+        setBackup(!backup)
     }, []);
 
     function callMe(){
@@ -56,7 +59,7 @@ const id = localStorage.getItem('userId');
         { /*USER'S ISSUE LIST*/ } {
             props.userIssues.map(item => {
                 return <IssueCard  flag={callMe} issue={ item }
-                showButtons = { false }
+                showButtons = { false } backup={backup} setBackup={setBackup}
                 />;
             })
         } 
