@@ -3,7 +3,7 @@ import { withFormik, Form, Field } from "formik";
 import * as yup from "yup";
 import { axiosWithAuth } from "../axiosWithAuth/axiosWithAuth.js";
 import IssueCard from "../components/IssueCard.js";
-import SubmitIssueForm from "./SubmitIssueForm.js";
+import IssueForm from "./IssueForm.js";
 
 // IMPORT STYLED COMPONENTS AND MIXINS
 import styled from "styled-components";
@@ -54,7 +54,7 @@ const id = localStorage.getItem('userId');
         </header>
 
         { /*NEW ISSUE FORM*/ } 
-        <SubmitIssueForm  flag={callMe}/>
+        <IssueForm  flag={callMe}/>
 
         { /*USER'S ISSUE LIST*/ } {
             props.userIssues.map(item => {

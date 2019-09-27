@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // IMPORT STYLED COMPONENTS AND CSS MIXINS
 import styled from "styled-components";
-import SubmitIssueForm from "../components/SubmitIssueForm.js";
+import IssueForm from "./IssueForm.js";
 
 //import redux/fn
 import { deleteIssues, upVote, downVote, getAllIssues, getUserIssues } from '../actions/index';
@@ -75,7 +75,7 @@ console.log("ISSUE STRUCTURE", issue);
 
   function showForm () {
     //console.log("On click");
-    setForm(<SubmitIssueForm issue={issue} flagChange={props.flagChange} />);
+    setForm(<IssueForm issue={issue} flagChange={props.flagChange} />);
   }
 
 function upVoteNow (){

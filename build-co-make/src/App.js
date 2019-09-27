@@ -10,7 +10,7 @@ import PrivateRoute from './components/PrivateRoute.js';
 import IssuePage from "./components/IssuePage.js";
 
 // IMPORT SUBMIT ISSUE FORM
-import SubmitIssueForm from "./components/SubmitIssueForm.js";
+import IssueForm from "./components/IssueForm.js";
 
 function App() {
 
@@ -42,7 +42,7 @@ function App() {
         <PrivateRoute
           path="/submitIssue"
           render={props => {
-            return <SubmitIssueForm onSubmit={onSubmitIssue} />;
+            return <IssueForm onSubmit={onSubmitIssue} />;
           }}
         />
         {/* <Route path="/issue/:id" component={IssuePage}/> */}

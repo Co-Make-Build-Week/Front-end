@@ -19,7 +19,7 @@ const StyledDiv = styled.div `
   ${formMixin}
 `;
 
-function SubmitIssueForm(props, { values, errors, touched, isSubmitting }) {
+function IssueForm(props, { values, errors, touched, isSubmitting }) {
     //props will have a props.issue prop, if undefined we're creating new issue, if not undefined we're editing
     console.log(props);
     let existingIssue = {
@@ -160,7 +160,7 @@ function SubmitIssueForm(props, { values, errors, touched, isSubmitting }) {
         </StyledDiv>
     );
 }
-const FormikSubmitIssueForm = withFormik({
+const FormikIssueForm = withFormik({
     mapPropsToValues({ title, category, details, issueLocation, issueID }) {
         //console.log("issueLocation, MAKE SURE THIS MATCHES WHAT YOU PUT IN FORM", issueLocation, title, category, details)
         return {
@@ -225,7 +225,7 @@ const FormikSubmitIssueForm = withFormik({
             props.props.addIssue(issueTemplate);
         }
     }
-})(SubmitIssueForm);
+})(IssueForm);
 
 const mapStateToProps = state => {
     const { issues } = state;
@@ -238,5 +238,5 @@ const mapStateToProps = state => {
 export default withRouter(
     connect(
         mapStateToProps, { addIssue, updateIssue, getUserIssues, getAllIssues }
-    )(FormikSubmitIssueForm)
+    )(FormikIssueForm)
 );
